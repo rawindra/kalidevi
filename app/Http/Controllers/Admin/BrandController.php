@@ -14,7 +14,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Brand/Index');
+        return Inertia::render('Admin/Brand/Index', [
+            'brands' => Brand::all(),
+        ]);
     }
 
     /**
@@ -22,7 +24,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Brand/Create');
     }
 
     /**
@@ -30,7 +32,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        Brand::create($validated);
+
+        return redirect()->route('admin.brands.index');
     }
 
     /**
@@ -46,7 +54,9 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return Inertia::render('Admin/Brand/Edit', [
+            'brand' => $brand,
+        ]);
     }
 
     /**
@@ -54,7 +64,13 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $brand->update($validated);
+
+        return redirect()->route('admin.brands.index');
     }
 
     /**
@@ -62,6 +78,8 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        return redirect()->route('admin.brands.index');
     }
 }

@@ -63,9 +63,9 @@ export default function Authenticated({ user, children }) {
                     <a className="flex justify-center text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#" aria-label="Brand">Kalidevi Store</a>
                     <ul className="menu w-56 mt-6  border-t border-gray-700 ">
                         <li className={`mb-2 ${url === '/dashboard' ? 'active' : ''}`}><Link href={route('dashboard')}>Dashboard</Link></li>
-                        <li className={`mb-2 ${url === '/brands' ? 'active' : ''}`} ><Link href={route('brands.index')}>Brand</Link></li>
-                        <li className={`mb-2 ${url === '/categories' ? 'active' : ''}`}><Link>Category</Link></li>
-                        <li className={`mb-2 ${url === '/products' ? 'active' : ''}`}><Link>Product</Link></li>
+                        <li className={`mb-2 ${url.startsWith('/admin/brands') ? 'active' : ''}`} ><Link href={route('admin.brands.index')}>Brand</Link></li>
+                        <li className={`mb-2 ${url.startsWith('/admin/categories') ? 'active' : ''}`}><Link>Category</Link></li>
+                        <li className={`mb-2 ${url.startsWith('/admin/products') ? 'active' : ''}`}><Link>Product</Link></li>
                         <li className='mb-2'>
                             <details>
                                 <summary>Parent</summary>

@@ -25,4 +25,11 @@ class HomeController extends Controller
             'brands' => Brand::all(),
         ]);
     }
+
+    public function show(Product $product)
+    {
+        return Inertia::render('Product', [
+            'product' => $product->load('category', 'brand', 'media'),
+        ]);
+    }
 }

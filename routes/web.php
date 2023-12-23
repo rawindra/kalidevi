@@ -21,6 +21,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

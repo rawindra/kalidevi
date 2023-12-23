@@ -4,7 +4,7 @@ import Sidebar from '@/partials/Sidebar';
 
 export default function Front({ children }) {
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden px-16 py-5">
             <Header />
             {children}
             <Sidebar />

@@ -27,7 +27,7 @@ export default function Index({ categories }) {
                         {categories.map(category => (
                             <tr key={category.id}>
                                 <td>{category.name}</td>
-                                <td className='flex items-center justify-center gap-2'>
+                                <td className='flex items-center gap-2'>
                                     <Link as="button" href={route('admin.categories.edit', category.id)} className="btn btn-warning btn-xs">Edit</Link>
                                     <form onSubmit={(event) => submit(event, category)}>
                                         <button className="btn btn-error btn-xs" disabled={processing}>Delete</button>

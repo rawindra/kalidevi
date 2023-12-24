@@ -49,7 +49,7 @@ export default function Index({ products }) {
                                 <td>{product.stock}</td>
                                 <td>{product.featured ? "featured" : "not featured"}</td>
                                 <td>{product.published ? "published" : "not published"}</td>
-                                <td className='flex items-center justify-center gap-2'>
+                                <td className='flex items-center gap-2'>
                                     <Link as="button" href={route('admin.products.edit', product.id)} className="btn btn-warning btn-xs">Edit</Link>
                                     <form onSubmit={(event) => submit(event, product)}>
                                         <button className="btn btn-error btn-xs" disabled={processing}>Delete</button>

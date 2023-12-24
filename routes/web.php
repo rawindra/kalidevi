@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\FilterController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('brands', BrandController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
+        Route::resource('filters', FilterController::class);
     });
 });
 

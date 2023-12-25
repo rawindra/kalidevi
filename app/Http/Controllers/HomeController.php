@@ -28,8 +28,8 @@ class HomeController extends Controller
 
     public function show(Product $product)
     {
-        return Inertia::render('Product', [
-            'product' => $product->load('category', 'brand', 'media'),
+        return Inertia::render('ProductDetail', [
+            'product' => $product->load('category', 'brand', 'media', 'options'),
         ]);
     }
 }

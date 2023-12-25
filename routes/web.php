@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('brands', BrandController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
+        Route::get('products/{product}/options', [ProductController::class, 'createOptions'])->name('products.options.create');
+        Route::post('products/{product}/options', [ProductController::class, 'storeOptions'])->name('products.options.store');
         Route::resource('filters', FilterController::class);
     });
 });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Filter;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -110,6 +111,33 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+
+        return redirect()->route('admin.products.index');
+    }
+
+    public function createOptions(Product $product)
+    {
+        return Inertia::render('Admin/Product/Options', [
+            'product' => $product->load('options'),
+            'filters' => Filter::all(),
+        ]);
+    }
+
+    public function storeOptions(Request $request, Product $product)
+    {
+        foreach ($request->options as $filterId => $filterValues) {
+            $optionsData = ['options' => json_encode($filterValues)];
+
+            // Check if the combination of product and filter already exists
+            if (!$product->options()->where('filter_id', $filterId)->exists()) {
+                // If it doesn't exist, attach the new entry
+                $product->options()->syncWithoutDetaching([$filterId => $optionsData]);
+            } else {
+                // If it exists, you can choose to update the existing entry or skip it
+                // For example, updating the existing entry:
+                $product->options()->updateExistingPivot($filterId, $optionsData);
+            }
+        }
 
         return redirect()->route('admin.products.index');
     }

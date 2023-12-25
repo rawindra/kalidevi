@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('filter_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->json('options');
             $table->timestamps();
         });
     }

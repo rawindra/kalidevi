@@ -10,7 +10,7 @@ export default function Shop({ products, filters }) {
     return (
         <FrontLayout>
             <Head title="Shop" />
-            <BreadCrumb />
+            <BreadCrumb title="Shop" />
             <div className="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
                 <div className="col-span-1 bg-white px-4 pb-6 shadow rounded overflow-hiddenb hidden md:block">
                     <div className="divide-y divide-gray-200 space-y-5">

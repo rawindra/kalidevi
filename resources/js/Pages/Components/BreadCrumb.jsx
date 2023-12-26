@@ -2,16 +2,16 @@ import { Link } from '@inertiajs/react'
 import React from 'react'
 import { FaChevronRight, FaHouseDamage } from 'react-icons/fa'
 
-const BreadCrumb = () => {
+const BreadCrumb = ({ title }) => {
     return (
-        <div class="container py-4 flex items-center gap-3">
-            <Link href={"/"} class="text-primary text-base">
+        <div className="container py-4 flex items-center gap-3">
+            <Link href={"/"} className="text-primary text-base">
                 <FaHouseDamage />
             </Link>
-            <span class="text-sm text-gray-400">
+            <span className="text-sm text-gray-400">
                 <FaChevronRight />
             </span>
-            <p class="text-gray-600 font-medium">Shop</p>
+            <p className="text-gray-600 font-medium">{title}</p>
         </div>
     )
 }

@@ -1,46 +1,84 @@
 import React from 'react'
 import FrontLayout from '@/Layouts/FrontLayout';
 import { Head } from '@inertiajs/react';
+import BreadCrumb from './Components/BreadCrumb';
 
 const ProductDetail = ({ product }) => {
     return (
         <FrontLayout>
             <Head title="Kalidevi Store" />
-            <div className="container mx-auto my-8 p-8 bg-white shadow-md rounded-md">
-                <div className="grid grid-cols-2 gap-8">
-                    <div className="col-span-1">
-                        <img src={product.media[0].original_url} alt={product.name} className="w-full h-auto rounded-md shadow-md" />
-                    </div>
-
-                    <div className="col-span-1">
-                        <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
-                        <p className="text-gray-700 mb-4">{product.category.name} | {product.brand.name}</p>
-                        <p className="text-xl text-blue-500 font-semibold mb-4">Rs. {product.price}</p>
-                        {product.options.map((filter, index) => (
-                            <div className="mb-4" key={index}>
-                                <label htmlFor="color" className="text-gray-600">{filter.name}</label>
-                                <select
-                                    className="block w-full p-2 border rounded-md bg-white focus:outline-none focus:ring focus:border-blue-300">
-                                    {filter.pivot.options.map((option, index) => (
-                                        <option value={option} key={index}>{option}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        ))}
-
-                        <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                            Add to Cart
-                        </button>
-                    </div>
+            <BreadCrumb title="Product Detail" />
+            <div className="container grid grid-cols-2 gap-6">
+                <div>
+                    <img src={product.media[0].original_url} alt={product.name} className="w-full" />
                 </div>
 
-                <div className="mt-8">
-                    <h2 className="text-2xl font-semibold mb-4">Product Description</h2>
-                    <p className="text-gray-700">{product.description}</p>
+                <div>
+                    <h2 className="text-3xl font-medium uppercase mb-2">{product.name}</h2>
+                    <div className="space-y-2">
+                        <p className="text-gray-800 font-semibold space-x-2">
+                            <span>Availability: </span>
+                            <span className="text-green-600">{product.stock ? 'In Stock' : 'Out of Stock'}</span>
+                        </p>
+                        <p className="space-x-2">
+                            <span className="text-gray-800 font-semibold">Brand: </span>
+                            <span className="text-gray-600">{product.brand.name}</span>
+                        </p>
+                        <p className="space-x-2">
+                            <span className="text-gray-800 font-semibold">Category: </span>
+                            <span className="text-gray-600">{product.category.name}</span>
+                        </p>
+                    </div>
+                    <div className="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
+                        <p className="text-xl text-primary font-semibold">Rs {product.price}</p>
+                    </div>
+
+                    {product.options.map((filter, index) => (
+                        <div className="pt-4" key={index}>
+                            <label htmlFor="color" className="text-gray-600">{filter.name}</label>
+                            <select
+                                className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                {filter.pivot.options.map((option, index) => (
+                                    <option value={option} key={index}>{option}</option>
+                                ))}
+                            </select>
+                        </div>
+                    ))}
+
+
+
+                    <div className="mt-4">
+                        <h3 className="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
+                        <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
+                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-</div>
+                            <div className="h-8 w-8 text-base flex items-center justify-center">1</div>
+                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">+</div>
+                        </div>
+                    </div>
+
+                    <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
+                        <a href="#"
+                            className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
+                            <i className="fa-solid fa-bag-shopping"></i> Add to cart
+                        </a>
+                        <a href="#"
+                            className="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition">
+                            <i className="fa-solid fa-heart"></i> Wishlist
+                        </a>
+                    </div>
                 </div>
             </div>
-        </FrontLayout>
+
+            <div className="container pb-16">
+                <h3 className="border-b border-gray-200 font-roboto text-orange-800 pt-3 pb-3 font-medium">Product Description</h3>
+                <div className="w-3/5 pt-6">
+                    <div className="text-gray-600">
+                        <p>{product.description}</p>
+                    </div>
+
+                </div>
+            </div>
+        </FrontLayout >
     )
 }
 

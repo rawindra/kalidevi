@@ -1,35 +1,11 @@
 import FrontLayout from '@/Layouts/FrontLayout';
-import { Link, Head } from '@inertiajs/react';
 import ProductCard from '@/Pages/Components/ProductCard';
-import { FaHeart, FaSearch } from 'react-icons/fa';
+import { Head } from '@inertiajs/react';
 
-export default function Home({ products }) {
+export default function Home({ products, featuredProducts }) {
     return (
         <FrontLayout>
             <Head title="Kalidevi Store" />
-            {/* <div className="container mx-auto">
-                <div className="grid grid-cols-12">
-                    <div className="col-span-3">
-                        {categories.map((category, index) => {
-                            return (<div key={index} className="flex items-center">
-                                <Link href={`/shop/category/${category.id}`}
-                                    className="ml-3 text-sm text-gray-600"
-                                >
-                                    {category.name}
-                                </Link>
-                            </div>)
-                        })}
-                    </div>
-                    <div className='col-span-9'>
-                        Slider
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm mx-auto md:max-w-none md:mx-0">
-                    {products.map(product => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
-            </div> */}
             <div className="bg-cover bg-no-repeat bg-center py-36" style={{ backgroundImage: 'url(assets/images/banner-bg.jpg)' }}>
                 <div className="container">
                     <h1 className="text-6xl text-gray-800 font-medium mb-4 capitalize">
@@ -48,9 +24,9 @@ export default function Home({ products }) {
             <div className="container pt-16 pb-16">
                 <h2 className="text-2xl font-medium text-orange-800 uppercase mb-6">Featured Products</h2>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    {products.map((product, index) => {
+                    {featuredProducts.map((featuredProduct, index) => {
                         return (
-                            <ProductCard key={index} product={product} />
+                            <ProductCard key={index} product={featuredProduct} />
                         )
                     })}
                 </div>

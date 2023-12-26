@@ -12,14 +12,14 @@ const Header = () => {
                 <div className="container flex items-center justify-between">
                     <Link href={'/'} className='font-bold text-red-500'>Kalidevi Store</Link >
                     <div className="w-full max-w-xl relative flex">
-                        <span className="absolute left-4 top-3 text-lg text-gray-400">
+                        <span className="absolute left-4 top-[15px] text-lg text-gray-400">
                             <FaSearch className="fa-solid fa-magnifying-glass" />
                         </span>
                         <input type="text" name="search" id="search"
                             className="w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none hidden md:flex"
                             placeholder="search" />
                         <button
-                            className="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition hidden md:flex">Search</button>
+                            className="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition hidden md:flex items-center">Search</button>
                     </div>
 
                     <div className="flex items-center space-x-4">
@@ -59,12 +59,12 @@ const Header = () => {
                         <span className="capitalize ml-2 text-white hidden">All Categories</span>
 
                         <div
-                            className="absolute w-full left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible">
-                            { }
-                            <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                                <img src="assets/images/icons/sofa.svg" alt="sofa" className="w-5 h-5 object-contain" />
-                                <span className="ml-6 text-gray-600 text-sm">Sofa</span>
-                            </a>
+                            className="absolute min-w-[200px] left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible">
+                            {categories.map((category, index) =>
+                                <Link href={`/shop/category/${category.id}`} className="flex items-center px-6 py-3 hover:bg-gray-100 transition" key={index}>
+                                    <span className="ml-6 text-gray-600 text-sm">{category.name}</span>
+                                </Link>
+                            )}
                         </div>
                     </div>
 

@@ -22,7 +22,7 @@ const Header = () => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <Link href={'wishlist'} className="text-center text-gray-700 hover:text-primary transition relative">
+                        <a href="#" className="text-center text-gray-700 hover:text-primary transition relative">
                             <div className="text-2xl">
                                 <FaHeart />
                             </div>
@@ -30,7 +30,7 @@ const Header = () => {
                             <div
                                 className="absolute right-0 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
                                 8</div>
-                        </Link>
+                        </a>
                         <a href="#" className="text-center text-gray-700 hover:text-primary transition relative">
                             <div className="text-2xl">
                                 <FaShoppingBag />
@@ -58,12 +58,12 @@ const Header = () => {
                         <span className="capitalize ml-2 text-white hidden">All Categories</span>
 
                         <div
-                            className="absolute w-full left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible">
-                            { }
-                            <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                                <img src="assets/images/icons/sofa.svg" alt="sofa" className="w-5 h-5 object-contain" />
-                                <span className="ml-6 text-gray-600 text-sm">Sofa</span>
-                            </a>
+                            className="absolute min-w-[200px] left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible">
+                            {categories.map((category, index) =>
+                                <Link href={`/shop/category/${category.id}`} className="flex items-center px-6 py-3 hover:bg-gray-100 transition" key={index}>
+                                    <span className="ml-6 text-gray-600 text-sm">{category.name}</span>
+                                </Link>
+                            )}
                         </div>
                     </div>
 

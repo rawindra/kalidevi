@@ -15,6 +15,7 @@ class HomeController extends Controller
     {
         return Inertia::render('Home', [
             'products' => Product::with(['category', 'media'])->published()->get(),
+            'featuredProducts' => Product::with(['category', 'media'])->featured()->get(),
             'categories' => Category::all(),
         ]);
     }

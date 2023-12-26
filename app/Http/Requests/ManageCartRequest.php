@@ -22,7 +22,9 @@ class ManageCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'required',
+            'quantity' => 'required',
+            'filter' => 'nullable'
         ];
     }
 }

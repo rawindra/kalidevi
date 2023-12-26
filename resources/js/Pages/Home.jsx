@@ -3,7 +3,7 @@ import { Link, Head } from '@inertiajs/react';
 import ProductCard from '@/Pages/Components/ProductCard';
 import { FaHeart, FaSearch } from 'react-icons/fa';
 
-export default function Home({ products, categories }) {
+export default function Home({ products }) {
     return (
         <FrontLayout>
             <Head title="Kalidevi Store" />

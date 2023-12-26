@@ -14,15 +14,12 @@ export default function Wishlist({ wishlist }) {
                             <img src={my_list.product.media[0].original_url} alt="product 6" className="w-full" />
                         </div>
                         <div className="w-1/3">
-                            <h2 className="text-gray-800 text-xl font-medium uppercase">{my_list.product.name}</h2>
+                            <Link href={route("products.show", my_list.product.id)} className="text-gray-800 text-xl font-medium uppercase">{my_list.product.name}</Link>
                             <p className="text-gray-500 text-sm">Availability: <span className="text-green-600">In Stock: {my_list.product.stock}</span></p>
                         </div>
                         <div className="text-primary text-lg font-semibold">Rs {my_list.product.price}</div>
 
                         <div className='flex gap-2'>
-                            <Link href="" data={{ 'product_id': my_list.product.id }} method="post" as="button" className="px-6 py-2 text-center text-sm text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">
-                                <FaShoppingBag />
-                            </Link>
 
                             <Link href={route('wishlist.destroy', my_list.id)} method="delete" as="button" className="px-6 py-2 text-center text-sm text-white bg-red-800 border border-red-800 rounded hover:bg-transparent hover:text-red-800 transition uppercase font-roboto font-medium">
                                 <FaTrash />

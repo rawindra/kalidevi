@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
                 <img src={product.media[0].original_url} alt="product 1" className="w-full" />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center 
                     justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                    <Link href={'/product/' + product.id}
+                    <Link href={'/products/' + product.id}
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                         title="view product">
                         <FaEye />
@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
                 </div>
             </div>
             <div className="pt-4 pb-3 px-4">
-                <Link href={'/product/' + product.id}>
+                <Link href={'/products/' + product.id}>
                     <h4 className="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
                         {product.name}</h4>
                 </Link>

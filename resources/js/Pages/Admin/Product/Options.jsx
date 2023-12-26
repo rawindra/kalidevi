@@ -35,7 +35,7 @@ const Create = ({ filters, product }) => {
                     <div className="form-control w-full max-w-xs" key={filterIndex}>
                         <label className="label cursor-pointer" key={filterIndex}>
                             <>
-                                <span className="label-text font-bold text-white">
+                                <span className="label-text font-bold text-orange-500">
                                     <div>{filter.name}</div>
                                 </span>
                             </>

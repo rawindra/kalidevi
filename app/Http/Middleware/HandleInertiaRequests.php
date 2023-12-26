@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'categories' => Category::all(),
+            'wishlist' => auth()->check() ? $request->user()->wishlist->load('product.media') : null,
         ];
     }
 }

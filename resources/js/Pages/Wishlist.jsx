@@ -1,6 +1,6 @@
 import FrontLayout from '@/Layouts/FrontLayout';
 import { Link, Head } from '@inertiajs/react';
-import { FaHeart, FaSearch } from 'react-icons/fa';
+import { FaTrash, FaShoppingBag  } from 'react-icons/fa';
 
 export default function Wishlist({ wishlist }) {
     return (
@@ -18,15 +18,20 @@ export default function Wishlist({ wishlist }) {
                             <p className="text-gray-500 text-sm">Availability: <span className="text-green-600">In Stock: {my_list.product.stock}</span></p>
                         </div>
                         <div className="text-primary text-lg font-semibold">Rs {my_list.product.price}</div>
-                        <a href="#"
-                            className="px-6 py-2 text-center text-sm text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">add
-                            to cart</a>
 
-                        <div className="text-gray-600 cursor-pointer hover:text-primary">
-                            <i className="fa-solid fa-trash"></i>
+                        <div className='flex gap-2'>
+                            <Link href="" data={{ 'product_id': my_list.product.id }} method="post" as="button" className="px-6 py-2 text-center text-sm text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">
+                                <FaShoppingBag />
+                            </Link>
+
+                            <Link href={route('wishlist.destroy', my_list.id)} method="delete" as="button" className="px-6 py-2 text-center text-sm text-white bg-red-800 border border-red-800 rounded hover:bg-transparent hover:text-red-800 transition uppercase font-roboto font-medium">
+                                <FaTrash />
+                            </Link>
                         </div>
                     </div>
-                )}
+                    
+                )
+                }
 
             </div>
         </FrontLayout>

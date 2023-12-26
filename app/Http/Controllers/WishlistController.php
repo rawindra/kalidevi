@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWishlistRequest;
 use App\Http\Requests\UpdateWishlistRequest;
+use App\Models\Product;
 use App\Models\Wishlist;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -26,15 +27,12 @@ class WishlistController extends Controller
      */
     public function store(StoreWishlistRequest $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateWishlistRequest $request, Wishlist $wishlist)
-    {
-        //
+        $wishlist = Wishlist::updateOrCreate([
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id
+        ]);
+        // $wishlist->save();
+        return redirect()->back();
     }
 
     /**
@@ -42,6 +40,7 @@ class WishlistController extends Controller
      */
     public function destroy(Wishlist $wishlist)
     {
-        //
+        $wishlist->delete();
+        return redirect()->back();
     }
 }

@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react'
 import React from 'react'
-import { FaHeart, FaSearch } from 'react-icons/fa'
+import { FaHeart, FaSearch, FaEye } from 'react-icons/fa'
 
 const ProductCard = ({ product }) => {
     return (
@@ -12,13 +12,16 @@ const ProductCard = ({ product }) => {
                     <Link href={'/product/' + product.id}
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                         title="view product">
-                        <FaSearch />
+                        <FaEye />
                     </Link>
-                    <a href="#"
+                    <Link href={route('wishlist.store')}
+                        data={{ product_id: product.id }}
+                        method="post"
+                        as="button"
                         className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                         title="add to wishlist">
                         <FaHeart />
-                    </a>
+                    </Link>
                 </div>
             </div>
             <div className="pt-4 pb-3 px-4">

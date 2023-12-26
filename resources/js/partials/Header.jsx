@@ -12,14 +12,14 @@ const Header = () => {
                 <div className="container flex items-center justify-between">
                     <Link href={'/'} className='font-bold text-red-500'>Kalidevi Store</Link >
                     <div className="w-full max-w-xl relative flex">
-                        <span className="absolute left-4 top-3 text-lg text-gray-400">
+                        <span className="absolute left-4 top-[15px] text-lg text-gray-400">
                             <FaSearch className="fa-solid fa-magnifying-glass" />
                         </span>
                         <input type="text" name="search" id="search"
                             className="w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none hidden md:flex"
                             placeholder="search" />
                         <button
-                            className="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition hidden md:flex">Search</button>
+                            className="bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition hidden md:flex items-center">Search</button>
                     </div>
 
                     <div className="flex items-center space-x-4">

@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useState, userState} from 'react'
 import FrontLayout from '@/Layouts/FrontLayout';
 import { Head } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 
 const ProductDetail = ({ product }) => {
+
+    const [ quantity, setQuantity ] = useState(1);
+
+    function increment() {
+        if (quantity < product.stock) {
+            setQuantity(quantity => quantity + 1);
+        }
+    }
+
+    function decrement() {
+        if (quantity > 1) {
+            setQuantity(quantity => quantity - 1 );
+        }
+    }
+
+    
     return (
         <FrontLayout>
             <Head title="Kalidevi Store" />
@@ -50,9 +66,9 @@ const ProductDetail = ({ product }) => {
                     <div className="mt-4">
                         <h3 className="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
                         <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-</div>
-                            <div className="h-8 w-8 text-base flex items-center justify-center">1</div>
-                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">+</div>
+                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none" onClick={decrement}>-</div>
+                            <div className="h-8 w-8 text-base flex items-center justify-center">{quantity}</div>
+                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none" onClick={increment}>+</div>
                         </div>
                     </div>
 

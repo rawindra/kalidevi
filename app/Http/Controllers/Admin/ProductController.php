@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -115,28 +116,28 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index');
     }
 
-    public function createOptions(Product $product)
+    public function createAttributes(Product $product)
     {
+        $selectedAttributes = [];
+
+        foreach ($product->attributes as $attribute) {
+            $selectedAttributes[$attribute->id][] = $attribute->pivot->attribute_value_id;
+        }
         return Inertia::render('Admin/Product/Options', [
-            'product' => $product->load('options'),
-            'filters' => Filter::all(),
+            'product' => $product,
+            'attributes' => Attribute::with('values')->get(),
+            'selectedAttributes' => $selectedAttributes
         ]);
     }
 
-    public function storeOptions(Request $request, Product $product)
+    public function storeAttributes(Request $request, Product $product)
     {
-        foreach ($request->options as $filterId => $filterValues) {
-            $optionsData = ['options' => json_encode($filterValues)];
-
-            // Check if the combination of product and filter already exists
-            if (!$product->options()->where('filter_id', $filterId)->exists()) {
-                // If it doesn't exist, attach the new entry
-                $product->options()->syncWithoutDetaching([$filterId => $optionsData]);
-            } else {
-                // If it exists, you can choose to update the existing entry or skip it
-                // For example, updating the existing entry:
-                $product->options()->updateExistingPivot($filterId, $optionsData);
+        $product->attributes()->detach();
+        foreach ($request->options as $attributeId => $valueIds) {
+            foreach ($valueIds as $valueId) {
+                $product->attributes()->attach($attributeId, ['attribute_value_id' => $valueId]);
             }
+
         }
 
         return redirect()->route('admin.products.index');

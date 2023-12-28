@@ -45,8 +45,6 @@ const ProductDetail = ({ product }) => {
                         </div>
                     ))}
 
-
-
                     <div className="mt-4">
                         <h3 className="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
                         <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">

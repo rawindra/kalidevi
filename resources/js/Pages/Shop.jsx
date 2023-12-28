@@ -1,12 +1,31 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { FaChevronDown, FaMinus, FaPlus } from 'react-icons/fa'
-import ProductCard from './Components/ProductCard';
 import FrontLayout from '@/Layouts/FrontLayout';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
+import ProductCard from './Components/ProductCard';
+import { useState } from 'react';
 
-export default function Shop({ products, filters }) {
+export default function Shop({ category, allProducts, filters }) {
+
+    const [products, setProducts] = useState(allProducts);
+
+    function handleOptionChange(option) {
+        const currentParams = new URLSearchParams(window.location.search);
+
+        // Toggle the option in the URL parameters
+        if (currentParams.has(option)) {
+            currentParams.delete(option);
+        } else {
+            currentParams.append(option, true);
+        }
+
+        // Update the component state with the new URL parameters
+        window.history.replaceState({}, '', `${window.location.pathname}?${currentParams.toString()}`);
+
+        fetch(`/shop/category/${category.id}/filter${window.location.search}`).then(res =>
+            res.json()
+        ).then(data => setProducts(data))
+    }
+
     return (
         <FrontLayout>
             <Head title="Shop" />
@@ -21,7 +40,10 @@ export default function Shop({ products, filters }) {
                                     <div className="space-y-2" key={index}>
                                         <div className="flex items-center">
                                             <input type="checkbox" name="brand-1" id="brand-1"
-                                                className="text-primary focus:ring-0 rounded-sm cursor-pointer" />
+                                                className="text-primary focus:ring-0 rounded-sm cursor-pointer"
+                                                onChange={() => handleOptionChange(option)}
+                                                defaultChecked={window.location.search.includes(option)}
+                                            />
                                             <label htmlFor="brand-1" className="text-gray-600 ml-3 cusror-pointer">{option}</label>
                                         </div>
                                     </div>
@@ -42,7 +64,7 @@ export default function Shop({ products, filters }) {
                     </div>
 
                     <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
-                        {products.map((product) =>
+                        {products && products.map((product) =>
                             <ProductCard product={product} key={product.id} />
                         )}
                     </div>

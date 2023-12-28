@@ -122,7 +122,7 @@ export default function Create({ categories, brands }) {
                         <span className="label-text">Published</span>
                         <input
                             type="checkbox"
-                            onChange={e => { console.log(e.target.value); setData('published', e.target.checked) }}
+                            onChange={e => { setData('published', e.target.checked) }}
                             className="checkbox"
                         />
                     </label>

@@ -2,19 +2,19 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function Edit({ filter }) {
-    const [inputValues, setInputValues] = useState(filter.options);
+export default function Create() {
+    const [inputValues, setInputValues] = useState(['']);
 
-    const { data, setData, put, processing, errors } = useForm({
-        name: filter.name,
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        values: '',
     })
 
     function submit(e) {
         e.preventDefault()
-        data.options = inputValues;
+        data.values = inputValues;
 
-        put(`/admin/filters/${filter.id}`)
-
+        post('/admin/attributes');
     }
 
     const handleAddMore = () => {
@@ -52,7 +52,7 @@ export default function Edit({ filter }) {
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Options</span>
+                        <span className="label-text">Values</span>
                     </div>
                 </label>
                 {inputValues.map((value, index) => (
@@ -69,11 +69,13 @@ export default function Edit({ filter }) {
                         )}
                     </div>
                 ))}
+                {errors.values && <span className='text-red-500'>{errors.values}</span>}
+
                 <button type="button" onClick={handleAddMore}>
                     Add More
                 </button>
 
-                <button className="btn mt-2 mb-2" disabled={processing}>Update</button>
+                <button className="btn mt-2 mb-2" disabled={processing}>Create</button>
             </form>
         </AuthenticatedLayout>
     )

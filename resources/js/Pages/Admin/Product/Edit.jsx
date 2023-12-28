@@ -126,7 +126,7 @@ export default function Create({ categories, brands, product }) {
                         <input
                             type="checkbox"
                             defaultChecked={data.published}
-                            onChange={e => { console.log(e.target.value); setData('published', e.target.checked) }}
+                            onChange={e => { setData('published', e.target.checked) }}
                             className="checkbox"
                         />
                     </label>

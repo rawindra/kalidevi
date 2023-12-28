@@ -54,7 +54,7 @@ export default function Index({ products }) {
                                     <form onSubmit={(event) => submit(event, product)}>
                                         <button className="btn btn-error btn-xs" disabled={processing}>Delete</button>
                                     </form>
-                                    <Link as="button" href={route('admin.products.options.create', product.id)} className="btn btn-info btn-xs">Add Options</Link>
+                                    <Link as="button" href={route('admin.products.attributes.create', product.id)} className="btn btn-info btn-xs">Add Attributes</Link>
                                 </td>
                             </tr>
                         ))}

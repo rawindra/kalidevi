@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\FilterController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,6 +24,7 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop/category/{category}', [HomeController::class, 'shop'])->name('shop');
+Route::get('/shop/category/{category}/filter', [HomeController::class, 'filter'])->name('shop.filter');
 Route::get('/products/{product}', [HomeController::class, 'show'])->name('show');
 
 Route::get('/dashboard', function () {
@@ -42,9 +42,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('brands', BrandController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
-        Route::get('products/{product}/options', [ProductController::class, 'createOptions'])->name('products.options.create');
-        Route::post('products/{product}/options', [ProductController::class, 'storeOptions'])->name('products.options.store');
-        Route::resource('filters', FilterController::class);
+        Route::get('products/{product}/attributes', [ProductController::class, 'createAttributes'])->name('products.attributes.create');
+        Route::post('products/{product}/attributes', [ProductController::class, 'storeAttributes'])->name('products.attributes.store');
+        Route::resource('attributes', AttributeController::class);
     });
 });
 

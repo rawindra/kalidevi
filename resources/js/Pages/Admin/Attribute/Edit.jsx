@@ -2,19 +2,21 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function Create() {
-    const [inputValues, setInputValues] = useState(['']);
+export default function Edit({ attribute }) {
+    const pluck = (arr, key) => arr.map(i => i[key]);
 
-    const { data, setData, post, processing, errors } = useForm({
-        name: '',
-        options: '',
+    const [inputValues, setInputValues] = useState(pluck(attribute.values, 'name'));
+
+    const { data, setData, put, processing, errors } = useForm({
+        name: attribute.name,
     })
 
     function submit(e) {
         e.preventDefault()
-        data.options = inputValues;
+        data.values = inputValues;
 
-        post('/admin/filters');
+        put(`/admin/attributes/${attribute.id}`)
+
     }
 
     const handleAddMore = () => {
@@ -32,9 +34,6 @@ export default function Create() {
         newInputValues[index] = value;
         setInputValues(newInputValues);
     };
-
-    console.log(inputValues)
-
 
     return (
         <AuthenticatedLayout
@@ -55,7 +54,7 @@ export default function Create() {
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Options</span>
+                        <span className="label-text">Values</span>
                     </div>
                 </label>
                 {inputValues.map((value, index) => (
@@ -76,7 +75,7 @@ export default function Create() {
                     Add More
                 </button>
 
-                <button className="btn mt-2 mb-2" disabled={processing}>Create</button>
+                <button className="btn mt-2 mb-2" disabled={processing}>Update</button>
             </form>
         </AuthenticatedLayout>
     )

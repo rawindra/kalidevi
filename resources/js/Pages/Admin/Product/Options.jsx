@@ -2,14 +2,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 
-const Create = ({ filters, product }) => {
+const Create = ({ attributes, product, selectedAttributes }) => {
 
-    let defaultSelectedOption = {}
-    product.options.forEach((option) => {
-        const filterId = String(option.pivot.filter_id);
-        defaultSelectedOption[filterId] = option.pivot.options;
-    })
-    const [selectedOptions, setSelectedOptions] = useState(defaultSelectedOption || {});
+    const [selectedOptions, setSelectedOptions] = useState(selectedAttributes || {});
     const { data, post, processing, errors } = useForm({});
 
     const handleOptionChange = (filterId, option) => {
@@ -24,34 +19,32 @@ const Create = ({ filters, product }) => {
     const submit = async (e) => {
         e.preventDefault();
         data.options = selectedOptions;
-        post(`/admin/products/${product.id}/options`)
+        post(`/admin/products/${product.id}/attributes`)
 
     };
 
     return (
         <AuthenticatedLayout>
             <form onSubmit={submit}>
-                {filters.map((filter, filterIndex) => (
-                    <div className="form-control w-full max-w-xs" key={filterIndex}>
-                        <label className="label cursor-pointer" key={filterIndex}>
+                {attributes.map((attribute, attributeIndex) => (
+                    <div className="form-control w-full max-w-xs" key={attributeIndex}>
+                        <label className="label cursor-pointer" key={attributeIndex}>
                             <>
                                 <span className="label-text font-bold text-orange-500">
-                                    <div>{filter.name}</div>
+                                    <div>{attribute.name}</div>
                                 </span>
                             </>
                         </label>
-                        {filter.options.map((option, optionIndex) => (
-                            <label className="label cursor-pointer" key={optionIndex}>
+                        {attribute.values?.map((value, valueIndex) => (
+                            <label className="label cursor-pointer" key={valueIndex}>
                                 <>
-                                    <span className="label-text">{option}</span>
+                                    <span className="label-text">{value.name}</span>
                                     <input
                                         type="checkbox"
                                         className="checkbox"
-                                        onChange={() => handleOptionChange(filter.id, option)}
-                                        defaultChecked={product.options.some(
-                                            (productOption) =>
-                                                productOption.id === filter.id &&
-                                                productOption.pivot.options.includes(option)
+                                        onChange={() => handleOptionChange(attribute.id, value.id)}
+                                        defaultChecked={selectedAttributes[attribute?.id]?.some(
+                                            (option) => option === value.id
                                         )}
 
                                     />

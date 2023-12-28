@@ -34,9 +34,9 @@ class Product extends Model implements HasMedia
         return $query->where('featured', true);
     }
 
-    public function options()
+    public function attributes()
     {
-        return $this->belongsToMany(Filter::class)->withPivot('options')->using(FilterProduct::class);
+        return $this->belongsToMany(Attribute::class)->withPivot('attribute_value_id');
     }
 
 }

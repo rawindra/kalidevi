@@ -3,7 +3,7 @@ import FrontLayout from '@/Layouts/FrontLayout';
 import { Head } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({ product, selectedAttributes }) => {
     return (
         <FrontLayout>
             <Head title="Kalidevi Store" />
@@ -33,14 +33,19 @@ const ProductDetail = ({ product }) => {
                         <p className="text-xl text-primary font-semibold">Rs {product.price}</p>
                     </div>
 
-                    {product.options.map((filter, index) => (
+                    {Object.keys(selectedAttributes).map((attributeName, index) => (
                         <div className="pt-4" key={index}>
-                            <label htmlFor="color" className="text-gray-600">{filter.name}</label>
+                            <label htmlFor="color" className="text-gray-600">{attributeName}</label>
                             <select
                                 className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
-                                {filter.pivot.options.map((option, index) => (
-                                    <option value={option} key={index}>{option}</option>
-                                ))}
+                                {selectedAttributes[attributeName].map((option, index) => {
+                                    const key = Object.keys(option)[0];
+                                    const value = option[key];
+                                    return (
+                                        <option value={key} key={index}>{value}</option>
+                                    )
+                                }
+                                )}
                             </select>
                         </div>
                     ))}

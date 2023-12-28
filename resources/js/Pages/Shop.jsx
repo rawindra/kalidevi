@@ -4,7 +4,7 @@ import BreadCrumb from './Components/BreadCrumb';
 import ProductCard from './Components/ProductCard';
 import { useState } from 'react';
 
-export default function Shop({ category, allProducts, filters }) {
+export default function Shop({ category, allProducts, attributes }) {
 
     const [products, setProducts] = useState(allProducts);
 
@@ -33,10 +33,10 @@ export default function Shop({ category, allProducts, filters }) {
             <div className="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
                 <div className="col-span-1 bg-white px-4 pb-6 shadow rounded overflow-hiddenb hidden md:block">
                     <div className="divide-y divide-gray-200 space-y-5">
-                        {filters.map((filter, index) =>
+                        {attributes.map((attribute, index) =>
                             <div className="pt-4" key={index}>
-                                <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">{filter.name}</h3>
-                                {filter.options.map((option, index) =>
+                                <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">{attribute.name}</h3>
+                                {attribute.values.map((option, index) =>
                                     <div className="space-y-2" key={index}>
                                         <div className="flex items-center">
                                             <input type="checkbox" name="brand-1" id="brand-1"
@@ -44,7 +44,7 @@ export default function Shop({ category, allProducts, filters }) {
                                                 onChange={() => handleOptionChange(option)}
                                                 defaultChecked={window.location.search.includes(option)}
                                             />
-                                            <label htmlFor="brand-1" className="text-gray-600 ml-3 cusror-pointer">{option}</label>
+                                            <label htmlFor="brand-1" className="text-gray-600 ml-3 cusror-pointer">{option.name}</label>
                                         </div>
                                     </div>
                                 )}

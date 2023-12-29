@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
     Route::post('/cart', [CartController::class, 'manageCart'])->name('cart.manage');
+    Route::delete('/cart/{cart}', [CartController::class, 'deleteCart'])->name('cart.delete');
     Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
 
     Route::prefix('admin')->as('admin.')->group(function () {

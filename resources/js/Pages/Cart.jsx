@@ -23,7 +23,7 @@ export default function Cart({ cart_items }) {
 
                         <div className='flex gap-2'>
 
-                            <Link href={''} method="delete" as="button" className="px-6 py-2 text-center text-sm text-white bg-red-800 border border-red-800 rounded hover:bg-transparent hover:text-red-800 transition uppercase font-roboto font-medium">
+                            <Link href={route("cart.delete", my_list)} method="delete" as="button" className="px-6 py-2 text-center text-sm text-white bg-red-800 border border-red-800 rounded hover:bg-transparent hover:text-red-800 transition uppercase font-roboto font-medium">
                                 <FaTrash />
                             </Link>
                         </div>

@@ -1,22 +1,59 @@
-import React, { useState, userState} from 'react'
+import React, { useState, useEffect} from 'react'
 import FrontLayout from '@/Layouts/FrontLayout';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 
 const ProductDetail = ({ product }) => {
+    
+    //use useEffect hook to set filter value on load
+    useEffect(() => {
+        setFilterValue();
+    }, []);
 
+    const {data, post} = useForm({
+        // product_id: product.id,
+        // quantity: quantity,
+        // filter: filter,
+    });
+ 
     const [ quantity, setQuantity ] = useState(1);
+
+    const [ filter, setFilter ] = useState({});
+
+    //create function to set value of filter from product.options
+    function setFilterValue() {
+    setFilter(prevFilter => {
+        const updatedFilter = { ...prevFilter }; // Create a copy of previous filter state
+
+        product.options.forEach((option) => {
+            updatedFilter[option.name] = option.pivot.options[0];
+        });
+
+        return updatedFilter; // Return the updated filter object
+    });
+}
+
+
 
     function increment() {
         if (quantity < product.stock) {
             setQuantity(quantity => quantity + 1);
         }
     }
-
+  
     function decrement() {
         if (quantity > 1) {
             setQuantity(quantity => quantity - 1 );
         }
+    }
+
+    function send()
+    {
+        data.quantity = quantity;
+        data.product_id = product.id;
+        data.filter = filter;
+        post(route('cart.manage')); 
+
     }
 
     
@@ -53,6 +90,7 @@ const ProductDetail = ({ product }) => {
                         <div className="pt-4" key={index}>
                             <label htmlFor="color" className="text-gray-600">{filter.name}</label>
                             <select
+                                // onChange={e => setData(filter, e.target.value)}
                                 className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                 {filter.pivot.options.map((option, index) => (
                                     <option value={option} key={index}>{option}</option>
@@ -73,10 +111,10 @@ const ProductDetail = ({ product }) => {
                     </div>
 
                     <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-                        <a href="#"
+                        <button onClick={send}
                             className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
                             <i className="fa-solid fa-bag-shopping"></i> Add to cart
-                        </a>
+                        </button>
                         <a href="#"
                             className="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition">
                             <i className="fa-solid fa-heart"></i> Wishlist

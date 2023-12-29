@@ -11,4 +11,14 @@ class Cart extends Model
     use HasFactory;
 
     protected $fillable = ['user_id', 'product_id', 'filter', 'quantity'];
+
+    /**
+     * Get the product that owns the Wishlist
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

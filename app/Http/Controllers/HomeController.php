@@ -49,18 +49,11 @@ class HomeController extends Controller
 
     public function filter(Category $category, Request $request)
     {
-
-        $options = array_keys($request->all());
-        $products = $category->products()
-            ->with(['options' => function ($query) use ($options) {
-                // dd($query->options);
-                $query->whereJsonContains('options', $options)->first();
-            }])
+        dd($request->all());
+        $productIds = [];
+        return Product::with('category', 'brand', 'media')
+            ->whereIn('id', $productIds)
+            ->where('category_id', $category->id)
             ->get();
-        dd($products);
-        dump($options);
-        $productIds = FilterProduct::whereJsonContains('options', $options)->get()->pluck('product_id');
-        dd($productIds);
-        return Product::with('category', 'brand', 'media', 'options')->whereIn('id', $productIds)->where('category_id', $category->id)->get();
     }
 }

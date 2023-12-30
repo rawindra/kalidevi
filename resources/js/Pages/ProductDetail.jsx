@@ -22,16 +22,31 @@ const ProductDetail = ({ product }) => {
 
     //create function to set value of filter from product.options
     function setFilterValue() {
-    setFilter(prevFilter => {
-        const updatedFilter = { ...prevFilter }; // Create a copy of previous filter state
+        setFilter(prevFilter => {
+            const updatedFilter = { ...prevFilter }; // Create a copy of previous filter state
 
-        product.options.forEach((option) => {
-            updatedFilter[option.name] = option.pivot.options[0];
+            product.options.forEach((option) => {
+                updatedFilter[option.name] = option.pivot.options[0];
+            });
+
+            return updatedFilter; // Return the updated filter object
         });
 
-        return updatedFilter; // Return the updated filter object
-    });
-}
+    }
+
+    function assignNewFilter(filterOption, filterOptionValue)
+    {
+        setFilter(prevFilter => {
+            const updatedFilter = { ...prevFilter }; // Create a copy of previous filter state
+
+        //     filterOptions.forEach((option) => {
+                updatedFilter[filterOption.name] = filterOptionValue;
+        //     });
+
+            return updatedFilter; // Return the updated filter object
+        });
+        // console.log(filterOption.name, filterOptionValue);
+    }
 
 
 
@@ -90,7 +105,8 @@ const ProductDetail = ({ product }) => {
                         <div className="pt-4" key={index}>
                             <label htmlFor="color" className="text-gray-600">{filter.name}</label>
                             <select
-                                // onChange={e => setData(filter, e.target.value)}
+                                onChange={e => assignNewFilter(filter, e.target.value)}
+                                // onChange={e => setFilter()}
                                 className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                 {filter.pivot.options.map((option, index) => (
                                     <option value={option} key={index}>{option}</option>

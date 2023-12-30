@@ -8,20 +8,37 @@ export default function Shop({ category, allProducts, attributes }) {
 
     const [products, setProducts] = useState(allProducts);
 
-    function handleOptionChange(option) {
-        const currentParams = new URLSearchParams(window.location.search);
+    function buildQueryString(params) {
+        const queryString = Object.entries(params)
+            .map(([key, value]) => {
+                if (Array.isArray(value)) {
+                    return `${key}=${value.join(',')}`;
+                } else {
+                    return `${key}=${value}`;
+                }
+            })
+            .join('&');
 
-        // Toggle the option in the URL parameters
-        if (currentParams.has(option)) {
-            currentParams.delete(option);
-        } else {
-            currentParams.append(option, true);
-        }
+        return queryString;
+    }
 
-        // Update the component state with the new URL parameters
-        window.history.replaceState({}, '', `${window.location.pathname}?${currentParams.toString()}`);
+    let params = {};
 
-        fetch(`/shop/category/${category.id}/filter${window.location.search}`).then(res =>
+
+    function handleOptionChange(attribueName, optionId) {
+
+        params = {
+            ...params,
+            [attribueName]: params[attribueName]
+                ? params[attribueName].includes(optionId)
+                    ? params[attribueName].filter(item => item !== optionId)
+                    : [...params[attribueName], optionId]
+                : [optionId]
+        };
+
+        const queryString = buildQueryString(params);
+
+        fetch(`/shop/category/${category.id}/filter?${queryString}`).then(res =>
             res.json()
         ).then(data => setProducts(data))
     }
@@ -41,8 +58,7 @@ export default function Shop({ category, allProducts, attributes }) {
                                         <div className="flex items-center">
                                             <input type="checkbox" name="brand-1" id="brand-1"
                                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer"
-                                                onChange={() => handleOptionChange(option)}
-                                                defaultChecked={window.location.search.includes(option)}
+                                                onChange={() => handleOptionChange(attribute.name, option.id)}
                                             />
                                             <label htmlFor="brand-1" className="text-gray-600 ml-3 cusror-pointer">{option.name}</label>
                                         </div>

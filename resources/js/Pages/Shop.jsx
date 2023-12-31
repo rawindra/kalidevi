@@ -58,7 +58,7 @@ export default function Shop({ category, allProducts, attributes }) {
                                         <div className="flex items-center">
                                             <input type="checkbox" name="brand-1" id="brand-1"
                                                 className="text-primary focus:ring-0 rounded-sm cursor-pointer"
-                                                onChange={() => handleOptionChange(attribute.name, option.id)}
+                                                onChange={() => handleOptionChange(attribute.id, option.id)}
                                             />
                                             <label htmlFor="brand-1" className="text-gray-600 ml-3 cusror-pointer">{option.name}</label>
                                         </div>

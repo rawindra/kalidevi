@@ -19,7 +19,9 @@ export default function Cart({ cart_items }) {
                             <Link href={route("products.show", my_list.product.id)} className="text-gray-800 text-xl font-medium uppercase">{my_list.product.name}</Link>
                             <ProductFilter filters = {my_list.filter}/>
                         </div>
-                        <div className="text-primary text-lg font-semibold">Rs {my_list.product.price}</div>
+                        <div className="text-primary text-lg font-semibold">Quantity:  {my_list.quantity}</div>
+                        <div className="text-primary text-lg font-semibold">Rate: Rs {my_list.product.price}</div>
+                        <div className="text-primary text-lg font-semibold">Rs {my_list.product.price * my_list.quantity}</div>
 
                         <div className='flex gap-2'>
 

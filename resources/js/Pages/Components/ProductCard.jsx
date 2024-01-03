@@ -1,12 +1,12 @@
 import { Link } from '@inertiajs/react'
 import React from 'react'
-import { FaHeart, FaSearch, FaEye } from 'react-icons/fa'
+import { FaHeart, FaEye } from 'react-icons/fa'
 
 const ProductCard = ({ product }) => {
     return (
         <div className="bg-white shadow rounded overflow-hidden group">
             <div className="relative">
-                {/* <img src={product.media[0].original_url} alt="product 1" className="w-full" /> */}
+                <img src={product.media[0].original_url} alt="product 1" className="w-full" />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center 
                     justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                     <Link href={'/products/' + product.id}

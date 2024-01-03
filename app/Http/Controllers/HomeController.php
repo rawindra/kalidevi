@@ -49,37 +49,23 @@ class HomeController extends Controller
 
     public function filter(Category $category, Request $request)
     {
-        // dd($request->all());
 
         $selectedAttributes = $request->all();
+        $query = Product::query()->with(['media']);
 
-        // $query = \DB::table('products as p')
-        //     ->select('p.id', 'p.name');
-        $query = \DB::table('products as p');
-        foreach ($selectedAttributes as $attribute => $options) {
-            $optionsArray = explode(',', $options);
-
-            // $query->join('attribute_product as pa', function ($join) use ($attribute, $optionsArray) {
-            //     $join->on('p.id', '=', 'pa.product_id');
-
-            //     $join->where('pa.attribute_id', '=', $attribute);
-
-            //     $join->whereIn('pa.attribute_value_id', $optionsArray);
-
-            // });
-
-            $query->join('attribute_product as ap', 'p.id', '=', 'ap.product_id')
-                ->select('p.name')
-                ->distinct()
-                ->where('ap.attribute_id', $attribute)
-                ->whereIn('ap.attribute_value_id', $optionsArray);
+        foreach ($selectedAttributes as $attributeId => $attributeValues) {
+            $query->where(function ($subQuery) use ($attributeId, $attributeValues) {
+                foreach (explode(',', $attributeValues) as $attributeValue) {
+                    $subQuery->whereHas('attributes', function ($attributeSubQuery) use ($attributeId, $attributeValue) {
+                        $attributeSubQuery->where('attribute_id', $attributeId)
+                            ->where('attribute_value_id', $attributeValue);
+                    });
+                }
+            });
         }
 
-        $results = $query->distinct()->get();
+        return $query->published()->get();
 
-        return $results;
-
-        // $productIds = [];
         // return Product::with('category', 'brand', 'media')
         //     ->whereIn('id', $productIds)
         //     ->where('category_id', $category->id)

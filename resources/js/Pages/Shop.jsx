@@ -1,46 +1,54 @@
 import FrontLayout from '@/Layouts/FrontLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 import ProductCard from './Components/ProductCard';
 import { useState } from 'react';
 
 export default function Shop({ category, allProducts, attributes }) {
 
+    const [params, setParams] = useState([]);
     const [products, setProducts] = useState(allProducts);
 
+
     function buildQueryString(params) {
-        const queryString = Object.entries(params)
-            .map(([key, value]) => {
-                if (Array.isArray(value)) {
-                    return `${key}=${value.join(',')}`;
-                } else {
-                    return `${key}=${value}`;
-                }
-            })
+        const filteredParams = {};
+
+        for (const [key, value] of Object.entries(params)) {
+            if (Array.isArray(value) && value.length > 0) {
+                filteredParams[key] = Array.isArray(value) ? value.join(',') : value;
+            }
+        }
+
+        const queryString = Object.entries(filteredParams)
+            .map(([key, value]) => `${key}=${value}`)
             .join('&');
 
         return queryString;
     }
 
-    let params = {};
+
+    let tparams = {};
 
 
-    function handleOptionChange(attribueName, optionId) {
+    function handleOptionChange(attributeId, optionId) {
 
-        params = {
+        tparams = {
             ...params,
-            [attribueName]: params[attribueName]
-                ? params[attribueName].includes(optionId)
-                    ? params[attribueName].filter(item => item !== optionId)
-                    : [...params[attribueName], optionId]
+            [attributeId]: params[attributeId]
+                ? params[attributeId].includes(optionId)
+                    ? params[attributeId].filter(item => item !== optionId)
+                    : [...params[attributeId], optionId]
                 : [optionId]
         };
+        const queryString = buildQueryString(tparams);
 
-        const queryString = buildQueryString(params);
-
-        fetch(`/shop/category/${category.id}/filter?${queryString}`).then(res =>
-            res.json()
-        ).then(data => setProducts(data))
+        fetch(`/shop/category/${category.id}/filter?${queryString}`)
+            .then(res =>
+                res.json()
+            ).then(data => {
+                setParams(tparams)
+                setProducts(data)
+            })
     }
 
     return (
@@ -54,6 +62,7 @@ export default function Shop({ category, allProducts, attributes }) {
                             <div className="pt-4" key={index}>
                                 <h3 className="text-xl text-gray-800 mb-3 uppercase font-medium">{attribute.name}</h3>
                                 {attribute.values.map((option, index) =>
+
                                     <div className="space-y-2" key={index}>
                                         <div className="flex items-center">
                                             <input type="checkbox" name="brand-1" id="brand-1"

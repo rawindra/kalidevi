@@ -65,10 +65,5 @@ class HomeController extends Controller
         }
 
         return $query->published()->get();
-
-        // return Product::with('category', 'brand', 'media')
-        //     ->whereIn('id', $productIds)
-        //     ->where('category_id', $category->id)
-        //     ->get();
     }
 }

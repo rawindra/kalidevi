@@ -1,9 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FrontLayout from '@/Layouts/FrontLayout';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 
 const ProductDetail = ({ product, selectedAttributes }) => {
+    let initialFilter = {};
+
+    Object.keys(selectedAttributes).forEach(attributeName => {
+        const firstObject = selectedAttributes[attributeName][0];
+        const key = Object.keys(firstObject)[0];
+        const value = firstObject[key];
+        initialFilter[attributeName] = value;
+    });
+
+    const [quantity, setQuantity] = useState(1);
+
+    const [filter, setFilter] = useState(initialFilter);
+
+    const { data, post, processing } = useForm({
+        filter: filter
+    });
+
+    function increment() {
+        if (quantity < product.stock) {
+            setQuantity(quantity => quantity + 1);
+        }
+    }
+
+    function decrement() {
+        if (quantity > 1) {
+            setQuantity(quantity => quantity - 1);
+        }
+    }
+
+    function handleSelectChange(attributeName, selectedValue) {
+        setFilter(prevFilters => ({
+            ...prevFilters,
+            [attributeName]: selectedValue
+        }));
+
+    }
+
+    const addToCart = () => {
+        data.quantity = quantity;
+        data.product_id = product.id;
+        data.filter = filter;
+        post(route('cart.manage'));
+    }
+
     return (
         <FrontLayout>
             <Head title="Kalidevi Store" />
@@ -37,12 +81,13 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                         <div className="pt-4" key={index}>
                             <label htmlFor="color" className="text-gray-600">{attributeName}</label>
                             <select
+                                onChange={(e) => handleSelectChange(attributeName, e.target.value)}
                                 className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                 {selectedAttributes[attributeName].map((option, index) => {
                                     const key = Object.keys(option)[0];
                                     const value = option[key];
                                     return (
-                                        <option value={key} key={index}>{value}</option>
+                                        <option value={value} key={index}>{value}</option>
                                     )
                                 }
                                 )}
@@ -53,17 +98,17 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                     <div className="mt-4">
                         <h3 className="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
                         <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">-</div>
-                            <div className="h-8 w-8 text-base flex items-center justify-center">1</div>
-                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none">+</div>
+                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none" onClick={decrement}>-</div>
+                            <div className="h-8 w-8 text-base flex items-center justify-center">{quantity}</div>
+                            <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none" onClick={increment}>+</div>
                         </div>
                     </div>
 
                     <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-                        <a href="#"
+                        <button onClick={addToCart}
                             className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
                             <i className="fa-solid fa-bag-shopping"></i> Add to cart
-                        </a>
+                        </button>
                         <a href="#"
                             className="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition">
                             <i className="fa-solid fa-heart"></i> Wishlist

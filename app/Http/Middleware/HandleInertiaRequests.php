@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'categories' => Category::all(),
             'wishlist' => auth()->check() ? $request->user()->wishlist->load('product.media') : null,
+            'cart' => auth()->check() ? $request->user()->cart->load('product.media') : null,
         ];
     }
 }

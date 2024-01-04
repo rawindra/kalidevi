@@ -30,7 +30,7 @@ export default function Index({ brands }) {
                                 <td className='flex items-center gap-2'>
                                     <Link as="button" href={route('admin.brands.edit', brand.id)} className="btn btn-warning btn-xs">Edit</Link>
                                     <form onSubmit={(event) => submit(event, brand)}>
-                                        <button className="btn btn-error btn-xs" disabled={processing}>Delete</button>
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white btn btn-error btn-xs" disabled={processing}>Delete</button>
                                     </form>
                                 </td>
                             </tr>

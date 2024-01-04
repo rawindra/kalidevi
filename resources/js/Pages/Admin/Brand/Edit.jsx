@@ -29,7 +29,7 @@ export default function Edit({ brand }) {
                     {errors.name && <span className='text-red-500'>{errors.name}</span>}
                 </label>
 
-                <button className="btn mt-2 mb-2" disabled={processing}>Update</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white btn mt-2 mb-2" disabled={processing}>Update</button>
             </form>
         </AuthenticatedLayout>
     )

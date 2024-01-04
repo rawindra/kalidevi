@@ -24,7 +24,7 @@ const Header = () => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <Link href={'wishlist'} className="text-center text-gray-700 hover:text-primary transition relative">
+                        <Link href={'/wishlist'} className="text-center text-gray-700 hover:text-primary transition relative">
                             <div className="text-2xl">
                                 <FaHeart />
                             </div>

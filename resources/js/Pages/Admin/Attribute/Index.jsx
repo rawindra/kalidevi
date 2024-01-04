@@ -14,7 +14,7 @@ export default function Index({ attributes }) {
         <AuthenticatedLayout
         >
             <Head title="Filter" />
-            <Link as="button" href={route('admin.attributes.create')} className="btn">Create</Link>
+            <Link as="button" href={route('admin.attributes.create')} className="bg-blue-500 hover:bg-blue-700 text-white btn">Create</Link>
 
             <div className="overflow-x-auto">
                 <table className="table">

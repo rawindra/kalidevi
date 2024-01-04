@@ -3,6 +3,7 @@ import { Head, useForm } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 import ProductCard from './Components/ProductCard';
 import { useState } from 'react';
+import { data } from 'autoprefixer';
 
 export default function Shop({ category, allProducts, attributes }) {
 
@@ -40,7 +41,9 @@ export default function Shop({ category, allProducts, attributes }) {
 
         fetch(`/shop/category/${category.id}/filter?${queryString}`).then(res =>
             res.json()
-        ).then(data => setProducts(data))
+        )
+        .then(data => console.log(data))
+        // .then(data => setProducts(data))
     }
 
     return (

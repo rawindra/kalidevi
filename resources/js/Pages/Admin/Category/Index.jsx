@@ -13,7 +13,7 @@ export default function Index({ categories }) {
         <AuthenticatedLayout
         >
             <Head title="Category" />
-            <Link as="button" href={route('admin.categories.create')} className="btn">Create</Link>
+            <Link as="button" href={route('admin.categories.create')} className="bg-blue-500 hover:bg-blue-700 text-white btn">Create</Link>
 
             <div className="overflow-x-auto">
                 <table className="table">

@@ -60,16 +60,16 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                 <div>
                     <h2 className="text-3xl font-medium uppercase mb-2">{product.name}</h2>
                     <div className="space-y-2">
-                        <p className="text-gray-800 font-semibold space-x-2">
+                        <p className="text-orange-800 font-semibold space-x-2">
                             <span>Availability: </span>
                             <span className="text-green-600">{product.stock ? 'In Stock' : 'Out of Stock'}</span>
                         </p>
                         <p className="space-x-2">
-                            <span className="text-gray-800 font-semibold">Brand: </span>
+                            <span className="text-orange-800 font-semibold">Brand: </span>
                             <span className="text-gray-600">{product.brand.name}</span>
                         </p>
                         <p className="space-x-2">
-                            <span className="text-gray-800 font-semibold">Category: </span>
+                            <span className="text-orange-800 font-semibold">Category: </span>
                             <span className="text-gray-600">{product.category.name}</span>
                         </p>
                     </div>

@@ -75,7 +75,7 @@ export default function Edit({ attribute }) {
                     Add More
                 </button>
 
-                <button className="btn mt-2 mb-2" disabled={processing}>Update</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white btn mt-2 mb-2" disabled={processing}>Update</button>
             </form>
         </AuthenticatedLayout>
     )

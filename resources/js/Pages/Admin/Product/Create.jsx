@@ -138,7 +138,7 @@ export default function Create({ categories, brands }) {
                     </label>
                 </div>
 
-                <button className="btn mt-2 mb-2" disabled={processing}>Create</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white btn mt-2 mb-2" disabled={processing}>Create</button>
             </form>
         </AuthenticatedLayout>
     )

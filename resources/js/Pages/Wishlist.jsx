@@ -1,6 +1,6 @@
 import FrontLayout from '@/Layouts/FrontLayout';
 import { Link, Head } from '@inertiajs/react';
-import { FaTrash, FaShoppingBag  } from 'react-icons/fa';
+import { FaTrash, FaShoppingBag } from 'react-icons/fa';
 
 export default function Wishlist({ wishlist }) {
     return (
@@ -8,13 +8,13 @@ export default function Wishlist({ wishlist }) {
             <Head title="Wishlist" />
             <div className="col-span-9 space-y-4">
 
-                {wishlist.map((my_list, index) => 
+                {wishlist.map((my_list, index) =>
                     <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded" key={index}>
                         <div className="w-28">
                             <img src={my_list.product.media[0].original_url} alt="product 6" className="w-full" />
                         </div>
                         <div className="w-1/3">
-                            <Link href={route("products.show", my_list.product.id)} className="text-gray-800 text-xl font-medium uppercase">{my_list.product.name}</Link>
+                            <Link href={route("products.show", my_list.product.id)} className="text-orange-800 text-xl font-medium uppercase">{my_list.product.name}</Link>
                             <p className="text-gray-500 text-sm">Availability: <span className="text-green-600">In Stock: {my_list.product.stock}</span></p>
                         </div>
                         <div className="text-primary text-lg font-semibold">Rs {my_list.product.price}</div>
@@ -26,7 +26,7 @@ export default function Wishlist({ wishlist }) {
                             </Link>
                         </div>
                     </div>
-                    
+
                 )
                 }
 

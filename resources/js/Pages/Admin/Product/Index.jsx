@@ -12,7 +12,7 @@ export default function Index({ products }) {
         <AuthenticatedLayout
         >
             <Head title="Product" />
-            <Link as="button" href={route('admin.products.create')} className="btn">Create</Link>
+            <Link as="button" href={route('admin.products.create')} className="bg-blue-500 hover:bg-blue-700 text-white btn">Create</Link>
 
             <div className="overflow-x-auto">
                 <table className="table">

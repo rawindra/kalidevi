@@ -59,11 +59,12 @@ export default function Create() {
                     <div key={index}>
                         <input
                             type="text"
+                            className="input input-bordered w-full mb-2 me-2 max-w-xs"
                             value={value}
                             onChange={(e) => handleInputChange(index, e.target.value)}
                         />
                         {inputValues.length > 1 && (
-                            <button type="button" onClick={() => handleRemove(index)}>
+                            <button type="button" className='text-white btn btn-error btn-xs' onClick={() => handleRemove(index)}>
                                 Remove
                             </button>
                         )}
@@ -71,11 +72,11 @@ export default function Create() {
                 ))}
                 {errors.values && <span className='text-red-500'>{errors.values}</span>}
 
-                <button type="button" onClick={handleAddMore}>
+                <button type="button" className="bg-yellow-500 hover:bg-blue-700 text-white btn btn-xs" onClick={handleAddMore}>
                     Add More
                 </button>
-
-                <button className="btn mt-2 mb-2" disabled={processing}>Create</button>
+                <br />
+                <button className="bg-blue-500 hover:bg-blue-700 text-white btn mt-4 mb-2" disabled={processing}>Create</button>
             </form>
         </AuthenticatedLayout>
     )

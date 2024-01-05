@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::get('products/{product}/attributes', [ProductController::class, 'createAttributes'])->name('products.attributes.create');
         Route::post('products/{product}/attributes', [ProductController::class, 'storeAttributes'])->name('products.attributes.store');
         Route::resource('attributes', AttributeController::class);
+        Route::resource('orders', OrderController::class);
     });
 });
 

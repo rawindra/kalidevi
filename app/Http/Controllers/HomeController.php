@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attribute;
 use App\Models\Brand;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\FilterProduct;
 use App\Models\Product;
@@ -65,5 +66,15 @@ class HomeController extends Controller
         }
 
         return $query->published()->get();
+    }
+
+    public function checkout()
+    {
+        dd('checkout page');
+    }
+
+    public function placeOrder(Request $request, Cart $cart)
+    {
+
     }
 }

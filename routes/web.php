@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart', [CartController::class, 'manageCart'])->name('cart.manage');
     Route::delete('/cart/{cart}', [CartController::class, 'deleteCart'])->name('cart.delete');
     Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
+    Route::get('/checkout',[HomeController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout',[HomeController::class, 'placeOrder'])->name('checkout.post');
 
     Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('brands', BrandController::class);

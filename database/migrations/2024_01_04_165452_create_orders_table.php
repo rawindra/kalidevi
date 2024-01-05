@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('order_date')->default(now());
-            $table->dateTime('delivery_date')->default(now());
-            $table->enum('order_status', ['pending', 'purchased', 'cancelled'])->nullable()->default(['pending']);
-            $table->enum('payment_status', ['unpaid', 'paid', 'credit-remaining'])->nullable()->default(['pending']);
+            $table->dateTime('order_date')->nullable()->default(now());
+            $table->dateTime('delivery_date')->nullable();
+            $table->enum('order_status', ['pending', 'purchased', 'cancelled'])->nullable()->default('pending');
+            $table->enum('payment_status', ['unpaid', 'paid', 'credit-remaining'])->nullable()->default('unpaid');
             $table->string('customer_name');
             $table->string('customer_contact_number');
             $table->string('customer_address')->nullable();

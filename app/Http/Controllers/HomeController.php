@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Filter;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class HomeController extends Controller
 {
@@ -68,9 +69,12 @@ class HomeController extends Controller
         return $query->published()->get();
     }
 
-    public function checkout()
+    public function checkout() : Response
     {
-        dd('checkout page');
+        $cart_items = auth()->user()->cart;
+        return Inertia::render('Checkout',[
+            'cart_items' => $cart_items
+        ]);
     }
 
     public function placeOrder(Request $request, Cart $cart)

@@ -15,7 +15,7 @@ const ProductFilter = ({ filters }) => {
     <div>
         {
             filterArray.map((my_filter, index) =>
-                <p className="text-gray-500 text-sm" key={index}>{my_filter.key.toUpperCase()}: <span className="text-green-600">{my_filter.value}</span></p>
+                <p className="text-gray-500 text-xs" key={index}>{my_filter.key.toUpperCase()}: <span className="text-green-600">{my_filter.value}</span></p>
             )
         }
     </div>

@@ -103,4 +103,11 @@ class HomeController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function orders()
+    {
+        return Inertia::render('Order',[
+            'orders' => Order::with(['orderItems.product.media'])->get()
+        ]);
+    }
 }

@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
     Route::get('/checkout',[HomeController::class, 'checkout'])->name('checkout');
     Route::post('/checkout',[HomeController::class, 'placeOrder'])->name('checkout.post');
+    Route::get('/orders',[HomeController::class, 'orders'])->name('orders');
 
     Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('brands', BrandController::class);

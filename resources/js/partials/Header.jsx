@@ -71,9 +71,8 @@ const Header = () => {
 
                     <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
                         <div className="flex items-center space-x-6 capitalize">
-                            <a href="index.html" className="text-gray-200 hover:text-white transition">Home</a>
-                            <a href="pages/shop.html" className="text-gray-200 hover:text-white transition">Shop</a>
-                            <a href="#" className="text-gray-200 hover:text-white transition">About us</a>
+                            <Link href="/" className="text-gray-200 hover:text-white transition">Home</Link>
+                            <Link href="/orders" className="text-gray-200 hover:text-white transition">My Order</Link>
                             <a href="#" className="text-gray-200 hover:text-white transition">Contact us</a>
                         </div>
                         <Link className="text-gray-200 hover:text-white transition" href={route('login')}>Login</Link>

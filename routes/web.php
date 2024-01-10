@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\HomeController;
@@ -50,7 +51,8 @@ Route::middleware('auth')->group(function () {
         Route::get('products/{product}/attributes', [ProductController::class, 'createAttributes'])->name('products.attributes.create');
         Route::post('products/{product}/attributes', [ProductController::class, 'storeAttributes'])->name('products.attributes.store');
         Route::resource('attributes', AttributeController::class);
-        Route::resource('orders', OrderController::class);
+        Route::resource('orders', AdminOrderController::class);
+        Route::post('orders/{order}/status', [AdminOrderController::class,'changeStatus'])->name('orders.changeStatus');
     });
 });
 

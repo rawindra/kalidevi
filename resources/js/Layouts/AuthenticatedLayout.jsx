@@ -67,6 +67,7 @@ export default function Authenticated({ user, children }) {
                         <li className={`mb-2 ${url.startsWith('/admin/categories') ? 'active' : ''}`}><Link href={route('admin.categories.index')}>Category</Link></li>
                         <li className={`mb-2 ${url.startsWith('/admin/products') ? 'active' : ''}`}><Link href={route('admin.products.index')}>Product</Link></li>
                         <li className={`mb-2 ${url.startsWith('/admin/attributes') ? 'active' : ''}`}><Link href={route('admin.attributes.index')}>Attribute</Link></li>
+                        <li className={`mb-2 ${url.startsWith('/admin/orders') ? 'active' : ''}`}><Link href={route('admin.orders.index')}>Order</Link></li>
                         <li className='mb-2'>
                             <details>
                                 <summary>Parent</summary>

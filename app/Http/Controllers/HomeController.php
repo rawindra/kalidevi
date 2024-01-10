@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\FilterProduct;
 use App\Models\Product;
 use App\Models\Filter;
+use App\Models\Order;
+use App\Models\OrderedItems;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -57,7 +59,7 @@ class HomeController extends Controller
 
         foreach ($selectedAttributes as $attributeId => $attributeValues) {
             $query->where(function ($subQuery) use ($attributeId, $attributeValues) {
-                foreach (explode(',', $attributeValues) as $attributeValue) {
+                foreach (explode(",", $attributeValues) as $attributeValue) {
                     $subQuery->whereHas('attributes', function ($attributeSubQuery) use ($attributeId, $attributeValue) {
                         $attributeSubQuery->where('attribute_id', $attributeId)
                             ->where('attribute_value_id', $attributeValue);
@@ -69,16 +71,36 @@ class HomeController extends Controller
         return $query->published()->get();
     }
 
-    public function checkout() : Response
+    public function checkout(): Response
     {
         $cart_items = auth()->user()->cart;
-        return Inertia::render('Checkout',[
+        return Inertia::render('Checkout', [
             'cart_items' => $cart_items
         ]);
     }
 
-    public function placeOrder(Request $request, Cart $cart)
+    public function placeOrder(Request $request)
     {
+        $order = new Order();
+        $order->customer_name = $request->firstName . " " . $request->lastName;
+        $order->customer_contact_number = $request->mobileNumber;
+        $order->customer_address = $request->contactAddress;
+        $order->order_date = now();
+        $order->delivery_date = now();
+        $order->order_status = 'pending';
+        $order->save();
+        foreach (auth()->user()->cart as $cartItem) {
+            $orderedItems = new OrderedItems();
+            $orderedItems->order_id = $order->id;    
+            $orderedItems->product_id = $cartItem->product_id;    
+            $orderedItems->quantity = $cartItem->quantity;    
+            $orderedItems->filter = $cartItem->filter;   
+            
+            $orderedItems->save();
+            $cartItem->delete();
+        }
 
+
+        return redirect()->route('home');
     }
 }

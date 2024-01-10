@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class OrderedItems extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'filter' => 'array'
+    ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

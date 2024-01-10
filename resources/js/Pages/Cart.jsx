@@ -34,6 +34,8 @@ export default function Cart({ cart_items }) {
                 )
                 }
 
+                <Link href={'/checkout'} className="bg-blue-500 hover:bg-blue-700 text-white btn mt-2 mb-2">Checkout</Link>
+
             </div>
         </FrontLayout>
 

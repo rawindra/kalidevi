@@ -1,7 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, router } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function Create({ categories, brands, product }) {
+    const [isBulkOrder, setIsBulkOrder] = useState(false);
+    const [bulkInputValues, setBulkInputValues] = useState([{
+        quantity: "",
+        price: "",
+    }]);
     const { data, setData, post, processing, errors } = useForm({
         brand_id: product.brand_id,
         category_id: product.category_id,
@@ -12,14 +18,41 @@ export default function Create({ categories, brands, product }) {
         featured: product.featured,
         published: product.published,
         image: {},
+        bulks: [{
+            quantity: "",
+            price: "",
+        }],
     })
 
     function submit(e) {
         e.preventDefault()
+        data.bulks = bulkInputValues;
         router.post(`/admin/products/${product.id}`, {
             _method: 'put',
             ...data
         })
+    }
+
+    const handleAddMore = () => {
+        setBulkInputValues([...bulkInputValues, { quantity: '', price: '' }]);
+    };
+
+    const handleRemove = (index) => {
+        const newInputValues = [...bulkInputValues];
+        newInputValues.splice(index, 1);
+        setBulkInputValues(newInputValues);
+    };
+
+    const handlePriceChange = (value, index) => {
+        const newInputValues = [...bulkInputValues];
+        newInputValues[index].price = value;
+        setBulkInputValues(newInputValues);
+    }
+
+    const handleQuantityChange = (value, index) => {
+        const newInputValues = [...bulkInputValues];
+        newInputValues[index].quantity = value;
+        setBulkInputValues(newInputValues);
     }
 
     return (
@@ -120,6 +153,46 @@ export default function Create({ categories, brands, product }) {
                     />
                     {errors.stock && <span className='text-red-500'>{errors.stock}</span>}
                 </label>
+                <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                        <span className="label-text">Bulk Order</span>
+                        <input type="checkbox" className="checkbox checkbox-primary" onChange={() => setIsBulkOrder(!isBulkOrder)} />
+                    </div>
+                </label>
+                {isBulkOrder && (
+                    <>{
+                        bulkInputValues.map((item, index) => (
+                            <div className='flex items-center gap-2' key={index}>
+                                <div className="label">
+                                    <span className="label-text">Quantity</span>
+                                </div>
+                                <input
+                                    type="number"
+                                    value={item.quantity}
+                                    className="input input-bordered w-full max-w-xs"
+                                    onChange={e => handleQuantityChange(e.target.value, index)}
+                                />
+                                <div className="label">
+                                    <span className="label-text">Price</span>
+                                </div>
+                                <input
+                                    type="number"
+                                    className="input input-bordered w-full max-w-xs"
+                                    value={item.price}
+                                    onChange={e => handlePriceChange(e.target.value, index)}
+                                />
+                                <button type="button" className='text-white btn btn-error btn-xs' onClick={() => handleRemove(index)}>
+                                    Remove
+                                </button>
+                            </div>
+                        ))
+                    }
+                        <button type="button" className="bg-yellow-500 hover:bg-blue-700 text-white btn btn-xs" onClick={handleAddMore}>
+                            Add More
+                        </button>
+                    </>
+                )}
+                <br />
                 <div className="form-control w-full max-w-xs">
                     <label className="label cursor-pointer">
                         <span className="label-text">Published</span>

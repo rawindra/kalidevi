@@ -26,7 +26,7 @@ function Index( { sliders }) {
                 <tbody>
                     {sliders.map(slider => (
                         <tr key={slider.id}>
-                            <td>{slider.name}</td>
+                            <td>{slider.title}</td>
                             <td className="flex items-center gap-2">
                                 <Link as="button" href={route('admin.sliders.edit', slider.id)} className="btn btn-warning btn-xs">Edit</Link>
                                 <form onSubmit={(event) => submit(event, slider)}>

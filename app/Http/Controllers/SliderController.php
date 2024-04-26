@@ -32,7 +32,13 @@ class SliderController extends Controller
      */
     public function store(StoreSliderRequest $request)
     {
-        //
+        // dd($request->all());
+        $validated = $request->validated();
+        if ($request->hasFile('photo')) {
+            Slider::create($validated)->addMedia($request->file('image'))->toMediaCollection('images');
+        }
+
+        return redirect()->route('admin.sliders.index');
     }
 
     /**

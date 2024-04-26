@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSliderRequest;
 use App\Http\Requests\UpdateSliderRequest;
 use App\Models\Slider;
+use Inertia\Inertia;
 
 class SliderController extends Controller
 {
@@ -13,7 +14,9 @@ class SliderController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Slider/Index', [
+            'sliders' => Slider::all(),
+        ]);
     }
 
     /**

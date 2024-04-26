@@ -20,11 +20,14 @@ export default function Cart({ cart_items }) {
                             <ProductFilter filters={my_list.filter} />
                         </div>
                         <div className="text-primary text-lg font-semibold">Quantity:  {my_list.quantity}</div>
-                        <div className="text-primary text-lg font-semibold">Rate: Rs {my_list.product.price}</div>
-                        <div className="text-primary text-lg font-semibold">Rs {my_list.product.price * my_list.quantity}</div>
+                        {my_list.price
+                            ?
+                            <div className="text-primary text-lg font-semibold">Rs {my_list.price}</div>
+                            :
+                            <div className="text-primary text-lg font-semibold">Rs {my_list.product.price * my_list.quantity}</div>
+                        }
 
                         <div className='flex gap-2'>
-
                             <Link href={route("cart.delete", my_list)} method="delete" as="button" className="px-6 py-2 text-center text-sm text-white bg-red-800 border border-red-800 rounded hover:bg-transparent hover:text-red-800 transition uppercase font-roboto font-medium">
                                 <FaTrash />
                             </Link>

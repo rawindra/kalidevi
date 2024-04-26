@@ -16,6 +16,8 @@ const ProductDetail = ({ product, selectedAttributes }) => {
     });
 
     const [quantity, setQuantity] = useState(1);
+    const [bulkQuantity, setBulkQuantity] = useState();
+    const [bulkPrice, setBulkPrice] = useState();
 
     const [filter, setFilter] = useState(initialFilter);
 
@@ -43,10 +45,19 @@ const ProductDetail = ({ product, selectedAttributes }) => {
 
     }
 
+    const handleChange = (quantity, price) => {
+        setBulkQuantity(quantity);
+        setBulkPrice(price);
+    }
+
     const addToCart = () => {
         data.quantity = quantity;
         data.product_id = product.id;
         data.filter = filter;
+        if (isBulkOrder) {
+            data.quantity = bulkQuantity;
+            data.price = bulkPrice;
+        }
         post(route('cart.manage'));
     }
 
@@ -108,7 +119,7 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                             {product?.bulks?.map((bulk, index) => (
                                 <div className="mt-4" key={index}>
                                     <div className="w-max">
-                                        <input type="radio" name="quantity" />
+                                        <input type="radio" name="quantity" onChange={() => handleChange(bulk.quantity, bulk.price)} />
                                         <span className='text-sm text-orange-800 uppercase mb-1'>Quantity: </span>
                                         <span className='mr-2'>{bulk.quantity}</span>
                                         <span className='text-sm text-orange-800 uppercase mb-1'>Price: </span>

@@ -95,6 +95,7 @@ class HomeController extends Controller
             $orderedItems->product_id = $cartItem->product_id;
             $orderedItems->quantity = $cartItem->quantity;
             $orderedItems->filter = $cartItem->filter;
+            $orderedItems->price = $cartItem->price ? $cartItem->price : $cartItem->product->price * $cartItem->quantity;
 
             $orderedItems->save();
             $cartItem->delete();

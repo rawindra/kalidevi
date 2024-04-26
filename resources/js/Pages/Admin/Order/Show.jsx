@@ -18,11 +18,17 @@ export default function Show({ orderItems }) {
                     </thead>
                     <tbody>
 
-                    {orderItems.map(item => (
+                        {orderItems.map(item => (
                             <tr key={item.id}>
                                 <td>{item.product.name}</td>
                                 <td>{item.quantity}</td>
-                                <td>{Object.values(item.filter).map(value => <span>{value},</span>)}</td>
+                                <td>{
+                                    Object.entries(JSON.parse(item.filter)).map(([key, value]) => (
+                                        <li key={key}>
+                                            <strong>{key}: </strong>{value}
+                                        </li>
+                                    ))
+                                }</td>
                             </tr>
                         ))}
 

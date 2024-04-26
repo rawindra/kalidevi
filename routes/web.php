@@ -9,6 +9,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::post('products/{product}/attributes', [ProductController::class, 'storeAttributes'])->name('products.attributes.store');
         Route::resource('attributes', AttributeController::class);
         Route::resource('orders', AdminOrderController::class);
+        Route::resource('sliders', SliderController::class);
         Route::post('orders/{order}/status', [AdminOrderController::class,'changeStatus'])->name('orders.changeStatus');
     });
 });

@@ -5,12 +5,13 @@ import React from 'react'
 function Create() {
     const { data, setData, post, processing, errors } = useForm({
         title: '',
-        image: null
+        photo: {},
     })
 
     function submit(event) {
         event.preventDefault()
         post('/admin/sliders')
+        console.log('submited');
     }
   return (
     <AuthenticatedLayout>
@@ -34,10 +35,10 @@ function Create() {
                 </div>
                 <input
                     type="file"
-                    onChange={e => { setData('image', e.target.files[0]) }}
+                    onChange={e => { setData('photo', e.target.files[0]) }}
                     className="file-input file-input-bordered w-full max-w-xs"
                 />
-                {errors.image && <span className='text-red-500'>{errors.image}</span>}
+                {errors.photo && <span className='text-red-500'>{errors.photo}</span>}
             </label>
 
             <button className="bg-blue-500 hover:bg-blue-700 text-white btn mt-2 mb-2" disabled={processing}>Create</button>

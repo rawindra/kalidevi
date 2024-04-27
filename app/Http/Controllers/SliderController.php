@@ -35,7 +35,7 @@ class SliderController extends Controller
         // dd($request->all());
         $validated = $request->validated();
         if ($request->hasFile('photo')) {
-            Slider::create($validated)->addMedia($request->file('image'))->toMediaCollection('images');
+            Slider::create($validated)->addMedia($request->file('photo'))->toMediaCollection('images');
         }
 
         return redirect()->route('admin.sliders.index');
@@ -70,6 +70,7 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        //
+        $slider->delete();
+        return redirect()->route('admin.sliders.index');
     }
 }

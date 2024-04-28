@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Filter;
 use App\Models\Order;
 use App\Models\OrderedItems;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,6 +24,7 @@ class HomeController extends Controller
             'products' => Product::with(['category', 'media'])->published()->get(),
             'featuredProducts' => Product::with(['category', 'media'])->featured()->get(),
             'categories' => Category::all(),
+            'sliders' => Slider::with('media')->get(),
         ]);
     }
 

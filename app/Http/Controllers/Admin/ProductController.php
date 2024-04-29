@@ -51,10 +51,12 @@ class ProductController extends Controller
             'stock' => 'required|integer',
         ]);
 
-        if ($request->hasFile('image')) {
-            Product::create($validated)->addMediaFromRequest('image')->toMediaCollection('images');
-        }
+        $product = Product::create($validated);
+        $product->bulks()->createMany($request->bulks);
 
+        if ($request->hasFile('image')) {
+            $product->addMediaFromRequest('image')->toMediaCollection('images');
+        }
 
         return redirect()->route('admin.products.index');
     }
@@ -96,6 +98,9 @@ class ProductController extends Controller
         ]);
 
         $product->update($validated);
+
+        $product->bulks()->delete();
+        $product->bulks()->createMany($request->bulks);
 
         if ($request->hasFile('image')) {
             $product->clearMediaCollection('images');

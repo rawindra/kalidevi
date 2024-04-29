@@ -39,4 +39,9 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Attribute::class)->withPivot('attribute_value_id');
     }
 
+    public function bulks()
+    {
+        return $this->hasMany(Bulk::class);
+    }
+
 }

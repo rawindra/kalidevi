@@ -4,6 +4,8 @@ import { Head, useForm } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 
 const ProductDetail = ({ product, selectedAttributes }) => {
+    const [isBulkOrder, setIsBulkOrder] = useState(false);
+
     let initialFilter = {};
 
     Object.keys(selectedAttributes).forEach(attributeName => {
@@ -14,6 +16,8 @@ const ProductDetail = ({ product, selectedAttributes }) => {
     });
 
     const [quantity, setQuantity] = useState(1);
+    const [bulkQuantity, setBulkQuantity] = useState();
+    const [bulkPrice, setBulkPrice] = useState();
 
     const [filter, setFilter] = useState(initialFilter);
 
@@ -41,10 +45,19 @@ const ProductDetail = ({ product, selectedAttributes }) => {
 
     }
 
+    const handleChange = (quantity, price) => {
+        setBulkQuantity(quantity);
+        setBulkPrice(price);
+    }
+
     const addToCart = () => {
         data.quantity = quantity;
         data.product_id = product.id;
         data.filter = filter;
+        if (isBulkOrder) {
+            data.quantity = bulkQuantity;
+            data.price = bulkPrice;
+        }
         post(route('cart.manage'));
     }
 
@@ -79,7 +92,7 @@ const ProductDetail = ({ product, selectedAttributes }) => {
 
                     {Object.keys(selectedAttributes).map((attributeName, index) => (
                         <div className="pt-4" key={index}>
-                            <label htmlFor="color" className="text-gray-600">{attributeName}</label>
+                            <label htmlFor="color" className="text-orange-600">{attributeName}</label>
                             <select
                                 onChange={(e) => handleSelectChange(attributeName, e.target.value)}
                                 className="block w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
@@ -95,15 +108,35 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                         </div>
                     ))}
 
-                    <div className="mt-4">
-                        <h3 className="text-sm text-gray-800 uppercase mb-1">Quantity</h3>
+                    {product.bulks.length >= 1 && <div className='mt-4'>
+                        <p className="space-x-2">
+                            <span className="text-orange-800 font-semibold">Bulk Order: </span>
+                            <input type="checkbox" className="checkbox checkbox-primary" onChange={() => setIsBulkOrder(!isBulkOrder)} />
+                        </p>
+                    </div>}
+                    {isBulkOrder ? (
+                        <>
+                            {product?.bulks?.map((bulk, index) => (
+                                <div className="mt-4" key={index}>
+                                    <div className="w-max">
+                                        <input type="radio" name="quantity" onChange={() => handleChange(bulk.quantity, bulk.price)} />
+                                        <span className='text-sm text-orange-800 uppercase mb-1'>Quantity: </span>
+                                        <span className='mr-2'>{bulk.quantity}</span>
+                                        <span className='text-sm text-orange-800 uppercase mb-1'>Price: </span>
+                                        <span>Rs {bulk.price}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </>
+                    ) : <div className="mt-4">
+                        <h3 className="text-sm text-orange-800 uppercase mb-1">Quantity</h3>
                         <div className="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
                             <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none" onClick={decrement}>-</div>
                             <div className="h-8 w-8 text-base flex items-center justify-center">{quantity}</div>
                             <div className="h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none" onClick={increment}>+</div>
                         </div>
                     </div>
-
+                    }
                     <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
                         <button onClick={addToCart}
                             className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">

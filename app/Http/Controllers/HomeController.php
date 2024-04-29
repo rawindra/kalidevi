@@ -47,7 +47,7 @@ class HomeController extends Controller
             $selectedAttributes[$attribute->name][] = [$attribute->pivot->attribute_value_id => $attribute->values()->where('id', $attribute->pivot->attribute_value_id)->first()->name];
         }
         return Inertia::render('ProductDetail', [
-            'product' => $product->load('category', 'brand', 'media'),
+            'product' => $product->load('category', 'brand', 'media', 'bulks'),
             'attributes' => $product,
             'selectedAttributes' => $selectedAttributes
         ]);
@@ -93,11 +93,12 @@ class HomeController extends Controller
         $order->save();
         foreach (auth()->user()->cart as $cartItem) {
             $orderedItems = new OrderedItems();
-            $orderedItems->order_id = $order->id;    
-            $orderedItems->product_id = $cartItem->product_id;    
-            $orderedItems->quantity = $cartItem->quantity;    
-            $orderedItems->filter = $cartItem->filter;   
-            
+            $orderedItems->order_id = $order->id;
+            $orderedItems->product_id = $cartItem->product_id;
+            $orderedItems->quantity = $cartItem->quantity;
+            $orderedItems->filter = $cartItem->filter;
+            $orderedItems->price = $cartItem->price ? $cartItem->price : $cartItem->product->price * $cartItem->quantity;
+
             $orderedItems->save();
             $cartItem->delete();
         }
@@ -108,7 +109,7 @@ class HomeController extends Controller
 
     public function orders()
     {
-        return Inertia::render('Order',[
+        return Inertia::render('Order', [
             'orders' => Order::with(['orderItems.product.media'])->get()
         ]);
     }

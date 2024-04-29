@@ -11,7 +11,7 @@ use Inertia\Response;
 
 class CartController extends Controller
 {
-    public function viewCart() : Response
+    public function viewCart(): Response
     {
         $cart_items = auth()->user()->cart;
         return Inertia::render('Cart', [
@@ -27,10 +27,11 @@ class CartController extends Controller
             'product_id' => $request->product_id,
             'quantity' => $request->quantity,
             'filter' => $filter,
+            "price" => $request->price
         ]);
 
         return redirect()->back();
-        
+
     }
 
     public function deleteCart(Cart $cart)

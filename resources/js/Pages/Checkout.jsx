@@ -10,9 +10,9 @@ export default function Checkout({ cart_items }) {
 
     let totalPrice = 0;
     cart_items.forEach(item => {
-        const price = parseFloat(item.product.price);
+        const price = item.price ? parseFloat(item.price) : parseFloat(item.product.price);
         const quantity = parseInt(item.quantity);
-        totalPrice += price * quantity;
+        totalPrice += item.price ? parseFloat(item.price) : price * quantity;
     });
 
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -20,7 +20,7 @@ export default function Checkout({ cart_items }) {
         lastName: '',
         mobileNumber: '',
         contactAddress: '',
-    }); 
+    });
 
 
     const placeOrder = (e) => {
@@ -53,10 +53,10 @@ export default function Checkout({ cart_items }) {
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <InputLabel 
-                                            htmlFor="first-name" 
+                                        <InputLabel
+                                            htmlFor="first-name"
                                             value="First Name"
-                                            className="text-gray-600" 
+                                            className="text-gray-600"
                                         />
                                         <TextInput
                                             id="first-name"
@@ -65,22 +65,22 @@ export default function Checkout({ cart_items }) {
                                             onChange={e => setData('firstName', e.target.value)}
                                             className="input-box"
                                         />
-                                        { errors.firstName && <span className='text-red-500'>{errors.firstName}</span> }
+                                        {errors.firstName && <span className='text-red-500'>{errors.firstName}</span>}
                                     </div>
                                     <div>
-                                        <InputLabel 
-                                            htmlFor="last-name" 
+                                        <InputLabel
+                                            htmlFor="last-name"
                                             value="Last Name"
-                                            className="text-gray-600" 
+                                            className="text-gray-600"
                                         />
                                         <TextInput
                                             id="last-name"
                                             name="last_name"
                                             value={data.lastName}
-                                            onChange={ e => setData('lastName', e.target.value)}
+                                            onChange={e => setData('lastName', e.target.value)}
                                             className="input-box"
                                         />
-                                        { errors.lastName && <span className='text-red-500'>{errors.lastName}</span>}
+                                        {errors.lastName && <span className='text-red-500'>{errors.lastName}</span>}
                                     </div>
                                 </div>
 
@@ -90,14 +90,14 @@ export default function Checkout({ cart_items }) {
                                         value="Mobile Number"
                                         className="text-gray-600"
                                     />
-                                    <TextInput 
+                                    <TextInput
                                         id="mobile-number"
                                         name="mobile_number"
                                         value={data.mobileNumber}
-                                        onChange={ e => setData('mobileNumber', e.target.value) }
+                                        onChange={e => setData('mobileNumber', e.target.value)}
                                         className="input-box"
                                     />
-                                    { errors.mobileNumber && <span className='text-red-500'>{errors.mobileNumber}</span> }
+                                    {errors.mobileNumber && <span className='text-red-500'>{errors.mobileNumber}</span>}
                                 </div>
                                 <div>
                                     <InputLabel
@@ -105,14 +105,14 @@ export default function Checkout({ cart_items }) {
                                         value="Contact Address"
                                         className="text-gray-600"
                                     />
-                                    <TextInput 
+                                    <TextInput
                                         id="contact-address"
                                         name="contact_address"
                                         value={data.contactAddress}
-                                        onChange={ e => setData('contactAddress', e.target.value)}
+                                        onChange={e => setData('contactAddress', e.target.value)}
                                         className="input-box"
                                     />
-                                    { errors.contactAddress && <span className='text-red-500'>{errors.contactAddress}</span> }
+                                    {errors.contactAddress && <span className='text-red-500'>{errors.contactAddress}</span>}
                                 </div>
                             </div>
 
@@ -120,20 +120,25 @@ export default function Checkout({ cart_items }) {
                         <div className="col-span-5 border border-gray-200 p-4 rounded">
                             <h4 className="text-gray-800 text-lg mb-4 font-medium uppercase">order summary</h4>
                             <div className="space-y-2">
-                                { cart_items.map( (cart_item, index) =>
+                                {cart_items.map((cart_item, index) =>
                                     <div className="flex justify-between" key={index}>
                                         <div>
                                             <h5 className="text-gray-800 font-medium">{cart_item.product.name}</h5>
                                             <ProductFilter filters={cart_item.filter} />
                                         </div>
                                         <p className="text-gray-600">x{cart_item.quantity}</p>
-                                        <p className="text-gray-800 font-medium">Rs {cart_item.product.price * cart_item.quantity}</p>
+                                        {cart_item.price
+                                            ?
+                                            <p className="text-gray-800 font-medium">Rs {cart_item.price}</p>
+                                            :
+                                            <p className="text-gray-800 font-medium">Rs {cart_item.quantity * cart_item.product.price}</p>
+                                        }
                                     </div>
                                 )}
                             </div>
                             <div className="flex justify-between border-t border-gray-200 mt-1 text-gray-800 font-medium py uppercase">
                                 <p className="font semi-bold">total</p>
-                                <p className="font font-extrabold">{ totalPrice.toFixed(2) }</p>
+                                <p className="font font-extrabold">{totalPrice.toFixed(2)}</p>
                             </div>
                             {/* <Link
                                 // href={route('checkout.post')}

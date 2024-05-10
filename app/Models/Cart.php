@@ -10,7 +10,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'filter', 'quantity'];
+    protected $fillable = ['user_id', 'product_id', 'filter', 'quantity', 'price'];
 
     /**
      * Get the product that owns the Wishlist

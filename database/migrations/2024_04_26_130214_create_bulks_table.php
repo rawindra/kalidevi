@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('ordered_items', function (Blueprint $table) {
+        Schema::create('bulks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Order::class);
-            $table->foreignIdFor(Product::class);
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->integer('quantity');
-            $table->json('filter')->nullable();
-            $table->bigInteger('price')->nullable();
+            $table->integer('price');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('ordered_items');
+        Schema::dropIfExists('bulks');
     }
 };

@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Product/Index', [
-            'products' => Product::with(['category', 'brand', 'media'])->get(),
+            'products' => Product::with(['category', 'brand', 'media'])->paginate(2),
         ]);
     }
 
@@ -55,7 +55,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $product->addMediaFromRequest('image')->toMediaCollection('images');
         }
-        if($request->bulks[0]["quantity"] != null &&  $request->bulks[0]["price"] != null) {
+        if ($request->bulks[0]["quantity"] != null && $request->bulks[0]["price"] != null) {
             $product->bulks()->createMany($request->bulks);
         }
 
@@ -105,7 +105,7 @@ class ProductController extends Controller
             $product->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
-        if($request->bulks[0]["quantity"] != null &&  $request->bulks[0]["price"] != null) {
+        if ($request->bulks[0]["quantity"] != null && $request->bulks[0]["price"] != null) {
             $product->bulks()->delete();
             $product->bulks()->createMany($request->bulks);
         }

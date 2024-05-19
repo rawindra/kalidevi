@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function shop(Category $category)
     {
         return Inertia::render('Shop', [
-            'allProducts' => $category->products()->with(['category', 'brand', 'media'])->published()->get(),
+            'allProducts' => $category->products()->with(['category', 'brand', 'media'])->published()->paginate(12),
             'categories' => Category::all(),
             'brands' => Brand::all(),
             'attributes' => Attribute::with('values')->get(),
@@ -70,7 +70,7 @@ class HomeController extends Controller
             });
         }
 
-        return $query->published()->get();
+        return $query->published()->paginate(12);
     }
 
     public function checkout(): Response

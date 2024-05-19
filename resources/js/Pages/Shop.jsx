@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 import ProductCard from './Components/ProductCard';
 import { useState } from 'react';
+import Pagination from './Components/Pagination';
 
 export default function Shop({ category, allProducts, attributes }) {
 
@@ -87,12 +88,14 @@ export default function Shop({ category, allProducts, attributes }) {
                             <option value="latest">Latest product</option>
                         </select>
                     </div>
-
                     <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
-                        {products && products.map((product) =>
+                        {products.data && products.data.map((product) =>
                             <ProductCard product={product} key={product.id} />
                         )}
                     </div>
+                    {
+                        products.data && <Pagination links={products.links} />
+                    }
                 </div>
             </div>
         </FrontLayout>

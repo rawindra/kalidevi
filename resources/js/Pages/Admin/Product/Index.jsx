@@ -1,4 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Pagination from '@/Pages/Components/Pagination';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Index({ products }) {
@@ -7,7 +8,6 @@ export default function Index({ products }) {
         e.preventDefault()
         confirm('Are you sure?') && destroy(`/admin/products/${product.id}`)
     }
-
     return (
         <AuthenticatedLayout
         >
@@ -29,7 +29,7 @@ export default function Index({ products }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map(product => (
+                        {products.data.map(product => (
                             <tr key={product.id}>
                                 <td>
                                     <div className="flex items-center gap-3">
@@ -60,6 +60,7 @@ export default function Index({ products }) {
                         ))}
                     </tbody>
                 </table>
+                <Pagination links={products.links} />
             </div>
 
         </AuthenticatedLayout>

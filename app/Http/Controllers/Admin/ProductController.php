@@ -52,10 +52,11 @@ class ProductController extends Controller
         ]);
 
         $product = Product::create($validated);
-        $product->bulks()->createMany($request->bulks);
-
         if ($request->hasFile('image')) {
             $product->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+        if($request->bulks[0]["quantity"] != null &&  $request->bulks[0]["price"] != null) {
+            $product->bulks()->createMany($request->bulks);
         }
 
         return redirect()->route('admin.products.index');
@@ -99,14 +100,15 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        $product->bulks()->delete();
-        $product->bulks()->createMany($request->bulks);
-
         if ($request->hasFile('image')) {
             $product->clearMediaCollection('images');
             $product->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
+        if($request->bulks[0]["quantity"] != null &&  $request->bulks[0]["price"] != null) {
+            $product->bulks()->delete();
+            $product->bulks()->createMany($request->bulks);
+        }
 
         return redirect()->route('admin.products.index');
     }

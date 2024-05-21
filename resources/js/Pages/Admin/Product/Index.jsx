@@ -35,7 +35,7 @@ export default function Index({ products }) {
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
                                             <div className="mask mask-squircle w-12 h-12">
-                                                <img src={product.media[0].original_url} alt={product.name} />
+                                                <img src={product.media[0]?.original_url} alt={product.name} />
                                             </div>
                                         </div>
                                         <div>

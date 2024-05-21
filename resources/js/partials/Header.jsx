@@ -3,9 +3,9 @@ import { Link, usePage } from '@inertiajs/react'
 import { FaBars, FaHeart, FaSearch, FaShoppingBag, FaUser } from 'react-icons/fa'
 
 const Header = () => {
-    const categories = usePage().props.categories;
     const wishlist = usePage().props.wishlist;
     const cart = usePage().props.cart;
+    const auth = usePage().props.auth;
 
     return (
         <>
@@ -42,18 +42,12 @@ const Header = () => {
                                 className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
                                 {cart?.length ?? 0}</div>
                         </Link>
-                        <a href="#" className="text-center text-gray-700 hover:text-primary transition relative">
-                            <div className="text-2xl">
-                                <FaUser />
-                            </div>
-                            <div className="text-xs leading-3">Account</div>
-                        </a>
                     </div>
                 </div>
             </header>
-            <nav className="bg-gray-800">
+            <nav className="bg-gray-800 z-50">
                 <div className="container flex">
-                    <div className="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
+                    {/* <div className="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
                         <span className="text-white">
                             <FaBars />
                         </span>
@@ -67,7 +61,7 @@ const Header = () => {
                                 </Link>
                             )}
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
                         <div className="flex items-center space-x-6 capitalize">
@@ -75,7 +69,13 @@ const Header = () => {
                             <Link href="/orders" className="text-gray-200 hover:text-white transition">My Order</Link>
                             <a href="#" className="text-gray-200 hover:text-white transition">Contact us</a>
                         </div>
-                        <Link className="text-gray-200 hover:text-white transition" href={route('login')}>Login</Link>
+                        <div>
+                            {auth.user ?
+                                <Link className="text-red-500 hover:text-white transition" href={route('logout')} method="post" as='button'>Logout</Link>
+                                :
+                                <Link className="text-green-500 hover:text-white transition" href={route('login')}>Login</Link>
+                            }
+                        </div>
                     </div>
                 </div>
             </nav>

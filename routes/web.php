@@ -28,7 +28,7 @@ use Inertia\Inertia;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop/category/{category}', [HomeController::class, 'shop'])->name('shop');
 Route::get('/shop/category/{category}/filter', [HomeController::class, 'filter'])->name('shop.filter');
-Route::get('/products/{product}', [HomeController::class, 'show'])->name('products.show');
+Route::get('/product/{product}', [HomeController::class, 'show'])->name('products.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -42,9 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart', [CartController::class, 'manageCart'])->name('cart.manage');
     Route::delete('/cart/{cart}', [CartController::class, 'deleteCart'])->name('cart.delete');
     Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
-    Route::get('/checkout',[HomeController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout',[HomeController::class, 'placeOrder'])->name('checkout.post');
-    Route::get('/orders',[HomeController::class, 'orders'])->name('orders');
+    Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [HomeController::class, 'placeOrder'])->name('checkout.post');
+    Route::get('/orders', [HomeController::class, 'orders'])->name('orders');
 
     Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('brands', BrandController::class);
@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('attributes', AttributeController::class);
         Route::resource('orders', AdminOrderController::class);
         Route::resource('sliders', SliderController::class);
-        Route::post('orders/{order}/status', [AdminOrderController::class,'changeStatus'])->name('orders.changeStatus');
+        Route::post('orders/{order}/status', [AdminOrderController::class, 'changeStatus'])->name('orders.changeStatus');
     });
 });
 

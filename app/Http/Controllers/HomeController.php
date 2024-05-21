@@ -21,8 +21,8 @@ class HomeController extends Controller
     public function index()
     {
         return Inertia::render('Home', [
-            'products' => Product::with(['category', 'media'])->published()->get(),
-            'featuredProducts' => Product::with(['category', 'media'])->featured()->get(),
+            'products' => Product::with(['category', 'media'])->published()->take(8)->get(),
+            'featuredProducts' => Product::with(['category', 'media'])->published()->featured()->take(8)->get(),
             'categories' => Category::all(),
             'sliders' => Slider::with('media')->get(),
         ]);

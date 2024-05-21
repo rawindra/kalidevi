@@ -79,15 +79,6 @@ export default function Shop({ category, allProducts, attributes }) {
                     </div>
                 </div>
                 <div className="col-span-3">
-                    <div className="flex items-center mb-4">
-                        <select name="sort" id="sort"
-                            className="w-44 text-sm text-gray-600 py-3 px-4 border-gray-300 shadow-sm rounded focus:ring-primary focus:border-primary">
-                            <option value="">Default sorting</option>
-                            <option value="price-low-to-high">Price low to high</option>
-                            <option value="price-high-to-low">Price high to low</option>
-                            <option value="latest">Latest product</option>
-                        </select>
-                    </div>
                     <div className="grid md:grid-cols-3 grid-cols-2 gap-6">
                         {products.data && products.data.map((product) =>
                             <ProductCard product={product} key={product.id} />

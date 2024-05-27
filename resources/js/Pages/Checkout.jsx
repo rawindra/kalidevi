@@ -44,19 +44,19 @@ export default function Checkout({ cart_items }) {
                     <span className="text-sm text-gray-400">
                         <FaChevronRight></FaChevronRight>
                     </span>
-                    <p className="text-gray-600 font-medium">Checkout</p>
+                    <p className="text-gray-600 dark:text-white font-medium">Checkout</p>
                 </div>
                 <form onSubmit={placeOrder}>
-                    <div className="container grid grid-cols-12 items-start pb-16 pt-4 gap-6">
-                        <div className="col-span-7 border border-gray-200 p-4 rounded">
+                    <div className="container grid grid-cols-1 md:grid-cols-2 items-start pb-16 pt-4 gap-6">
+                        <div className="border border-gray-200 p-4 rounded">
                             <h3 className="text-lg font-medium capitalize mb-4">Checkout</h3>
                             <div className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <InputLabel
                                             htmlFor="first-name"
                                             value="First Name"
-                                            className="text-gray-600"
+                                            className="text-gray-600 dark:text-white"
                                         />
                                         <TextInput
                                             id="first-name"
@@ -71,7 +71,7 @@ export default function Checkout({ cart_items }) {
                                         <InputLabel
                                             htmlFor="last-name"
                                             value="Last Name"
-                                            className="text-gray-600"
+                                            className="text-gray-600 dark:text-white"
                                         />
                                         <TextInput
                                             id="last-name"
@@ -88,7 +88,7 @@ export default function Checkout({ cart_items }) {
                                     <InputLabel
                                         htmlFor="mobile-number"
                                         value="Mobile Number"
-                                        className="text-gray-600"
+                                        className="text-gray-600 dark:text-white"
                                     />
                                     <TextInput
                                         id="mobile-number"
@@ -103,7 +103,7 @@ export default function Checkout({ cart_items }) {
                                     <InputLabel
                                         htmlFor="contact-address"
                                         value="Contact Address"
-                                        className="text-gray-600"
+                                        className="text-gray-600 dark:text-white"
                                     />
                                     <TextInput
                                         id="contact-address"
@@ -117,26 +117,26 @@ export default function Checkout({ cart_items }) {
                             </div>
 
                         </div>
-                        <div className="col-span-5 border border-gray-200 p-4 rounded">
-                            <h4 className="text-gray-800 text-lg mb-4 font-medium uppercase">order summary</h4>
+                        <div className="border border-gray-200 p-4 rounded">
+                            <h4 className="text-gray-600 dark:text-white text-lg mb-4 font-medium uppercase">order summary</h4>
                             <div className="space-y-2">
                                 {cart_items.map((cart_item, index) =>
                                     <div className="flex justify-between" key={index}>
                                         <div>
-                                            <h5 className="text-gray-800 font-medium">{cart_item.product.name}</h5>
+                                            <h5 className="text-gray-600 dark:text-white font-medium">{cart_item.product.name}</h5>
                                             <ProductFilter filters={cart_item.filter} />
                                         </div>
-                                        <p className="text-gray-600">x{cart_item.quantity}</p>
+                                        <p className="text-gray-600 dark:text-white">x{cart_item.quantity}</p>
                                         {cart_item.price
                                             ?
-                                            <p className="text-gray-800 font-medium">Rs {cart_item.price}</p>
+                                            <p className="text-gray-600 dark:text-white font-medium">Rs {cart_item.price}</p>
                                             :
-                                            <p className="text-gray-800 font-medium">Rs {cart_item.quantity * cart_item.product.price}</p>
+                                            <p className="text-gray-600 dark:text-white font-medium">Rs {cart_item.quantity * cart_item.product.price}</p>
                                         }
                                     </div>
                                 )}
                             </div>
-                            <div className="flex justify-between border-t border-gray-200 mt-1 text-gray-800 font-medium py uppercase">
+                            <div className="flex justify-between border-t border-gray-200 mt-1 text-gray-600 dark:text-white font-medium py uppercase">
                                 <p className="font semi-bold">total</p>
                                 <p className="font font-extrabold">{totalPrice.toFixed(2)}</p>
                             </div>

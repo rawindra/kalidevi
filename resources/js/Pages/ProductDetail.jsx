@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import FrontLayout from '@/Layouts/FrontLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import BreadCrumb from './Components/BreadCrumb';
 
 const ProductDetail = ({ product, selectedAttributes }) => {
@@ -65,7 +65,7 @@ const ProductDetail = ({ product, selectedAttributes }) => {
         <FrontLayout>
             <Head title="Kalidevi Store" />
             <BreadCrumb title="Product Detail" />
-            <div className="container grid grid-cols-2 gap-6">
+            <div className="container grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <img src={product.media[0]?.original_url} alt={product.name} className="w-full h-[400px]" />
                 </div>
@@ -89,13 +89,13 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                     <div className="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
                         <p className="text-xl text-primary font-semibold">Rs {product.price}</p>
                     </div>
-                    <div className="pt-4 flex gap-2">
+                    <div className="pt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
                         {Object.keys(selectedAttributes).map((attributeName, index) => (
                             <div key={index} className="flex flex-col">
                                 <label htmlFor="color" className="text-orange-600">{attributeName}</label>
                                 <select
                                     onChange={(e) => handleSelectChange(attributeName, e.target.value)}
-                                    className="w-[200px] text-violet-900 p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                                    className="w-[150px] md:w-[200px] text-violet-900 p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
                                     {selectedAttributes[attributeName].map((option, index) => {
                                         const key = Object.keys(option)[0];
                                         const value = option[key];
@@ -143,10 +143,13 @@ const ProductDetail = ({ product, selectedAttributes }) => {
                             className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
                             <i className="fa-solid fa-bag-shopping"></i> Add to cart
                         </button>
-                        <a href="#"
+                        <Link href={route('wishlist.store')}
+                            data={{ product_id: product.id }}
+                            method="post"
+                            as="button"
                             className="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition">
                             <i className="fa-solid fa-heart"></i> Wishlist
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

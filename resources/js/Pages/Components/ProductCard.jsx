@@ -4,9 +4,9 @@ import { FaHeart, FaEye } from 'react-icons/fa'
 
 const ProductCard = ({ product }) => {
     return (
-        <div className="bg-white shadow rounded overflow-hidden group w-[300px]">
+        <div className="bg-white shadow rounded overflow-hidden group w-[380px] md:w-[300px]">
             <div className="relative">
-                <img src={product.media[0]?.original_url} alt="product 1" className="w-full h-[200px]" />
+                <img src={product.media[0]?.original_url} alt="product 1" className="h-[200px]" />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center 
                     justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                     <Link href={route("products.show", product.id)}
